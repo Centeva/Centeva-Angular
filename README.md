@@ -1,27 +1,33 @@
 # CentevaCore
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.2.
+Centeva Core is a Common Angular package designed to contain reusable Angular pipes, directives, services, and Components.
 
-## Development server
+# Making Changes
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+It is recommended to not add anything to this repository until it is completely working within an existing project, as it may be hard to actively develop while using a package.
 
-## Code scaffolding
+# Publishing
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Versioning
+Please deploy an accurate version when publishing your changes, see below.
 
-## Build
+1. **MAJOR** version when you make incompatible API changes.
+2. **MINOR** version when you add functionality in a backwards compatible manner.
+3. **PATCH** version when you make backwards compatible bug fixes.
+## Package and Publish
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+- `npm run package` will package any changes up to the /dist folder.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- `npm run {VERSION}` will increment the correct version and publish the changes to NPM.
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+# Setting Up NPM link
 
-## Further help
+**NPM LINK** is used to test centeva-core package locally without having to package and publish.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+1. Within centeva-core CD to the /dist folder. 
+2. Run `npm link`
+3. Within your test project that you would like to use centeva-core run `npm link centeva-core`.
+4. Anytime you make a change in centeva-core run `npm run package` to rebuild the /dist folder.
+5. You will need to re-run your watch command in your centeva-core consuming application after any changes.

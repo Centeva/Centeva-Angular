@@ -1,0 +1,16 @@
+@import "../../colors";
+
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .loading-text {
+    font-style: italic;
+    margin-bottom: 20px;
+    font-size: 1.333rem;
+    color: $dark-gray;
+  }
+
+}

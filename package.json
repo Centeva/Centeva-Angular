@@ -1,31 +1,43 @@
 {
-  "name": "centeva-core",
-  "version": "0.0.0",
+  "name": "@centeva/centeva-core",
+  "version": "0.0.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "publish-patch": "npm run build && npm publish dist/centeva-core --access public",
+    "publish-minor": "npm version minor && npm run package && npm publish dist",
+    "publish-major": "npm version major && npm run package && npm publish dist"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "~12.1.2",
+    "@angular/cdk": "^12.1.1",
     "@angular/common": "~12.1.2",
     "@angular/compiler": "~12.1.2",
     "@angular/core": "~12.1.2",
     "@angular/forms": "~12.1.2",
+    "@angular/material": "^11.2.3",
     "@angular/platform-browser": "~12.1.2",
     "@angular/platform-browser-dynamic": "~12.1.2",
     "@angular/router": "~12.1.2",
+    "angular-material": "^1.2.2",
+    "lodash": "^4.17.21",
+    "luxon": "^1.28.0",
+    "material-design-icons": "^3.0.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "~12.1.2",
     "@angular/cli": "~12.1.2",
     "@angular/compiler-cli": "~12.1.2",
     "@types/jasmine": "~3.8.0",
+    "@types/lodash": "^4.14.171",
+    "@types/luxon": "^1.27.1",
     "@types/node": "^12.11.1",
     "jasmine-core": "~3.8.0",
     "karma": "~6.3.0",
@@ -33,6 +45,16 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "ng-packagr": "^12.1.0",
     "typescript": "~4.3.2"
-  }
+  },
+  "description": "Centeva Core is a Common Angular package designed to contain reusable Angular pipes, directives, services, and Components.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://cadensorenson@bitbucket.org/cadensorenson/centeva-angular.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/cadensorenson/centeva-angular#readme"
 }

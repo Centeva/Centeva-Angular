@@ -3,5 +3,37 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "centeva-core": {
+      "projectType": "library",
+      "root": "projects/centeva-core",
+      "sourceRoot": "projects/centeva-core/src",
+      "prefix": "cen",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/centeva-core/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/centeva-core/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/centeva-core/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/centeva-core/src/test.ts",
+            "tsConfig": "projects/centeva-core/tsconfig.spec.json",
+            "karmaConfig": "projects/centeva-core/karma.conf.js"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "centeva-core"
 }

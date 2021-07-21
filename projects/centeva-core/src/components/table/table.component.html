@@ -1,0 +1,110 @@
+<div class="table-wrapper" id="{{tableWrapperId}}" [ngClass]="{'table-wrapper-loading': tableLoading}" [formGroup]="formGroup">
+  <table mat-table tableResizer class="material-table" [dataSource]="dataSource?.Records">
+    <ng-container matColumnDef="{{column.Name}}" *ngFor="let column of displayedColumns">
+      <th mat-header-cell *matHeaderCellDef thResizable >
+        <!-- INPUT TYPES -->
+        <mat-form-field appearance="outline" class="colum-header" *ngIf="column.DataType == ColumnDataTypes.INPUT">
+          <mat-label>{{column.Name}}</mat-label>
+          <input [formControlName]="column.Property" matInput (input)="filterValueChanged(column)" autocomplete="off"/>
+          <mat-icon class="clear-icon" matSuffix *ngIf="formGroup.controls[column.Property]?.value" (click)="clearFilter(column, $event)">close</mat-icon>
+        </mat-form-field>
+
+        <!-- SELECT TYPES -->
+        <mat-form-field appearance="outline"  class="colum-header" *ngIf="column.DataType == ColumnDataTypes.SELECT">
+          <mat-label>{{ column.Name }}</mat-label>
+          <mat-select [formControlName]="column.Property" (selectionChange)="filterValueChanged(column)" >
+            <mat-option *ngFor="let option of column.Options" [value]="option.Id">
+              {{ option.Name }}
+            </mat-option>
+          </mat-select>
+          <mat-icon class="clear-icon" matSuffix *ngIf="formGroup.controls[column.Property]?.value" (click)="clearFilter(column, $event)">close</mat-icon>
+        </mat-form-field>
+
+        <!-- MULTISELECT TYPES -->
+        <mat-form-field appearance="outline"  class="colum-header" *ngIf="column.DataType == ColumnDataTypes.MULTISELECT">
+          <mat-label>{{ column.Name }}</mat-label>
+          <mat-select [formControlName]="column.Property" (selectionChange)="filterOrValueChanged(column)" matTooltip="Select all that apply" multiple>
+            <mat-option *ngFor="let option of column.Options" [value]="option.Id">
+              {{ option.Name }}
+            </mat-option>
+          </mat-select>
+          <mat-icon class="clear-icon" matSuffix *ngIf="formGroup.controls[column.Property]?.value?.length > 0" (click)="clearFilter(column, $event)">close</mat-icon>
+        </mat-form-field>
+        <!-- DATE TYPES -->
+        <mat-form-field appearance="outline" class="colum-header" *ngIf="column.DataType == ColumnDataTypes.DATEPICKER">
+          <mat-label>{{column.Name}}</mat-label>
+          <input [formControlName]="column.Property" matInput #pickerInput [matDatepicker]="picker" (click)="picker.open()" (dateChange)="filterValueChanged(column)">
+          <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-icon class="clear-icon" matSuffix *ngIf="formGroup.controls[column.Property]?.value" (click)="clearFilter(column, $event)">close</mat-icon>
+        </mat-form-field>
+        <!-- DATE RANGE TYPES -->
+        <mat-form-field appearance="outline" class="colum-header" *ngIf="column.DataType == ColumnDataTypes.DATEPICKRANGE" (click)="picker2.open()">
+          <mat-label>{{column.Name}}</mat-label>
+          <mat-date-range-input [rangePicker]="picker2" matTooltip="{{column.Tooltip}}">
+            <input [formControlName]="column.Property" matStartDate #dateRangeStart placeholder="Start date">
+            <input [formControlName]="column.Property + secondVal" matEndDate #dateRangeEnd placeholder="End date"  (dateChange)="filterDateRangeChange(column)">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matPrefix [for]="picker2"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker2></mat-date-range-picker>
+          <mat-icon class="clear-icon" matSuffix *ngIf="dateRangeStart.value || dateRangeEnd.value" (click)="clearFilter(column, $event)">close</mat-icon>
+        </mat-form-field>
+
+        <!-- COMPARISON TYPES -->
+        <ng-container class="comparison-container" *ngIf="column.DataType == ColumnDataTypes.COMPARISON">
+          <mat-form-field appearance="outline" class="colum-header" >
+            <mat-label>{{column.Name}}</mat-label>
+            <input [formControlName]="column.Property" #inputType matInput numberInput (input)="filterValueChanged(column)" autocomplete="off"/>
+            <mat-icon class="clear-icon" matSuffix (click)="$event.stopPropagation(); column.ShowComparison = true" >tune</mat-icon>
+            <mat-icon class="clear-icon" matSuffix *ngIf="formGroup.controls[column.Property]?.value" (click)="clearFilter(column, $event)">close</mat-icon>
+          </mat-form-field>
+          <div class="comparison" *ngIf="column.ShowComparison" (clickOutside)="column.ShowComparison ? column.ShowComparison = false : null">
+            <mat-radio-group [formControlName]="column.Property+radioFormControl">
+              <mat-radio-button  color="primary" [value]="Operands.GreaterThan" >
+                  <input [formControlName]="column.Property+Operands.GreaterThan" numberInput class="comparison-input" placeholder="Greater Than" matInput autocomplete="off"  />
+              </mat-radio-button>
+              <mat-radio-button color="primary" [value]="Operands.LessThan">
+                <input [formControlName]="column.Property+Operands.LessThan" numberInput class="comparison-input" placeholder="Less Than" matInput autocomplete="off"  />
+
+              </mat-radio-button>
+              <mat-radio-button color="primary" [value]="Operands.Between" class="radio-buttons">
+                <input [formControlName]="column.Property+Operands.Between" numberInput class="comparison-input" placeholder="Range Min" matInput autocomplete="off"  />
+                <input [formControlName]="column.Property+Operands.Between + secondVal" numberInput class="comparison-input negative-margin" placeholder="Range Max" matInput autocomplete="off"  />
+              </mat-radio-button>
+            </mat-radio-group>
+            <div class="comparison-buttons">
+              <button mat-raised-button color="default" (click)="column.ShowComparison = false">Cancel</button>
+              <button [disabled]="!formGroup.controls[column.Property+radioFormControl]?.value
+              || (!formGroup.controls[column.Property+Operands.GreaterThan]?.value
+              && !formGroup.controls[column.Property+Operands.LessThan]?.value
+              && (!formGroup.controls[column.Property+Operands.Between]?.value || !formGroup.controls[column.Property+Operands.Between + secondVal]?.value))" mat-raised-button color="primary" (click)="column.ShowComparison = false; filterComparisonChanged(column)">Apply</button>
+            </div>
+          </div>
+        </ng-container>
+
+        <span>
+          <mat-icon class="sort-icon" *ngIf="!ColumnSortState.SortProperty || ColumnSortState.SortProperty !== column.Property"
+          (click)="filterSortChanged($event, column.Property, SortStates.ASC)">arrow_upward</mat-icon>
+          <mat-icon class="sort-icon-selected" *ngIf="ColumnSortState.SortProperty == column.Property && ColumnSortState.SortDirection == SortStates.ASC"
+          (click)="filterSortChanged($event, column.Property, SortStates.DESC)">arrow_upward</mat-icon>
+          <mat-icon class="sort-icon-selected" *ngIf="ColumnSortState.SortProperty == column.Property && ColumnSortState.SortDirection == SortStates.DESC"
+          (click)="filterSortChanged($event, '', SortStates.NONE)">arrow_downward</mat-icon>
+        </span>
+      </th>
+
+      <ng-container>
+        <td [hidden]="tableLoading" #el *matCellDef="let element" [ngStyle]="column.Styles || null"  [title]="column.HoverDetails ? column.HoverDetails(column, element) : ''" (click)="column.Link($event, element[column.Property])">
+          <!-- dynamic pipe will load and use any pipe passed in from the Column object.  It will use any values if available, otherwise it will use the td element. -->
+          {{ (element[column.Property] | dynamic: column.Pipe?.Pipe:column.Pipe?.Values || el )}}
+        </td>
+      </ng-container>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnNames; sticky: true"></tr>
+    <tr class="table-row" mat-row *matRowDef="let row; columns: columnNames" (click)="rowSelected.emit(row)"></tr>
+  </table>
+  <div class="loading-bar">
+    <app-loading [hidden]="!tableLoading" loadingText="Loading Results.." ></app-loading>
+  </div>
+  
+</div>
