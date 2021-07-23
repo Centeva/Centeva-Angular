@@ -181,8 +181,8 @@ export class Utils {
     return reg.test(number);
   }
 
-  public static SortByName(items: any): any[] {
-    return _.sortBy(items, this.SmartSortFunctions('name'));
+  public static SortByKey(items: any, key: string): any[] {
+    return _.sortBy(items, this.SmartSortFunctions(key));
   }
 
   public static SmartSortFunctions(key: any) {

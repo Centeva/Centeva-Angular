@@ -23,6 +23,7 @@
             }
           },
           "defaultConfiguration": "production"
+         
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -35,5 +36,5 @@
       }
     }
   },
-  "defaultProject": "centeva-core"
+  "defaultProject": "centeva-core",
 }

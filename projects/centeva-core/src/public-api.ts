@@ -2,9 +2,8 @@
  * Public API Surface of centeva-core
  */
 
+
 // Directives
-export * from './directives/email.validator';
-export * from './directives/phone.validator';
 export * from './directives/number-input.directive';
 export * from './directives/table-resizer.directive';
 export * from './directives/th-resizable.directive';
@@ -16,14 +15,13 @@ export * from './pipes/capitalize.pipe';
 export * from './pipes/celsiusToFahrenheit.pipe';
 export * from './pipes/date.pipe';
 export * from './pipes/highlight.pipe';
-export * from './pipes/keys.pipe';
 export * from './pipes/middleDot.pipe';
 export * from './pipes/orderBy.pipe';
 export * from './pipes/percentage.pipe';
 export * from './pipes/phoneNumber.pipe';
 export * from './pipes/reverse.pipe';
 export * from './pipes/dynamic.pipe';
-export * from './pipes/fileType.pipe';
+export * from './pipes/safe-html.pipe';
 export * from './core-pipes.module';
 
 

@@ -5,7 +5,7 @@ import { Utils } from '../../src/common/utils/utils';
 
 describe('Utils Tests', () => {
 
-  describe('SortByName', () => {
+  describe('SortByKey', () => {
 
     it('Should be able to sort a simple list', () => {
       const list = [
@@ -15,7 +15,7 @@ describe('Utils Tests', () => {
         {name: '105'},
         {name: '101'},
       ];
-      const sortedList = Utils.SortByName(list);
+      const sortedList = Utils.SortByKey(list, 'name');
       expect(sortedList[0].name).toBe('101');
       expect(sortedList[1].name).toBe('102');
       expect(sortedList[2].name).toBe('103');
@@ -32,7 +32,7 @@ describe('Utils Tests', () => {
         {name: '11'},
         {name: '101' },
       ];
-      const sortedList = Utils.SortByName(list);
+      const sortedList = Utils.SortByKey(list, 'name');
       expect(sortedList[0].name).toBe('1');
       expect(sortedList[1].name).toBe('2');
       expect(sortedList[2].name).toBe('3');
