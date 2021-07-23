@@ -5,7 +5,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test-centeva-core": "ng test",
-    "publish": "npm run build && npm publish dist/centeva-core --access public"
+    "publish": "npm run build && npm publish dist/centeva-core --access public",
+    "copy-assets": "copy ./projects/centeva-core/src/assets/ ./dist/centeva-core/"
   },
   "private": false,
   "dependencies": {
