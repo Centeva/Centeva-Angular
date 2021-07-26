@@ -53,8 +53,8 @@ jobs:
           cache-from: type=local,src=/tmp/.ci-cache
           cache-to: type=local,dest=/tmp/.ci-cache-new
           tags: |
-            ghcr.io/Centeva/Centeva-Angular-ci:${{ needs.get_semver.outputs.semVer }}
-            ghcr.io/Centeva/Centeva-Angular-ci:latest
+            ghcr.io/centeva/centeva-angular-ci:${{ needs.get_semver.outputs.semVer }}
+            ghcr.io/centeva/centeva-angular-ci:latest
       - # Temp fix
         # https://github.com/docker/build-push-action/issues/252
         # https://github.com/moby/buildkit/issues/1896
@@ -62,20 +62,20 @@ jobs:
         run: |
           rm -rf /tmp/.ci-cache
           mv /tmp/.ci-cache-new /tmp/.ci-cache
-  create_tag:
-    name: Push github tag
-    runs-on: ubuntu-latest
-    needs:
-      - get_semver
-    steps:
-      - name: Create tag
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{ github.token }}
-          script: |
-            github.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: "refs/tags/${{ needs.get_semver.outputs.semVer }}",
-              sha: context.sha
-            })
+#   create_tag:
+#     name: Push github tag
+#     runs-on: ubuntu-latest
+#     needs:
+#       - get_semver
+#     steps:
+#       - name: Create tag
+#         uses: actions/github-script@v3
+#         with:
+#           github-token: ${{ github.token }}
+#           script: |
+#             github.git.createRef({
+#               owner: context.repo.owner,
+#               repo: context.repo.repo,
+#               ref: "refs/tags/${{ needs.get_semver.outputs.semVer }}",
+#               sha: context.sha
+#             })
