@@ -1,0 +1,29 @@
+FROM node:alpine as Build
+
+# Context will be root dir not /client because of github action weirdness
+# https://github.com/moby/buildkit/issues/1684
+
+RUN apk add chromium
+
+RUN addgroup -S ctnggroup \
+  && adduser -S ctnguser -G ctnggroup
+
+RUN mkdir -p /app \
+  && chown -R ctnguser /app
+
+# USER ctnguser
+
+ENV CHROME_BIN=/user/bin/chromium-browser
+
+
+COPY ./package.json /app/package.json
+COPY ./projects/centeva-core/package.json /app/projects/centeva-core/package.json
+COPY ./package-lock.json /app/package-lock.json
+
+RUN cd /app; npm ci
+
+COPY . /app
+
+WORKDIR /app
+ENTRYPOINT [ "npm", "run" ]
+CMD [ "test" ]

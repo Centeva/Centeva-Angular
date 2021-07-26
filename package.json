@@ -4,7 +4,8 @@
   "scripts": {
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test-centeva-core": "ng test",
+    "test": "ng test",
+    "test-ci": "ng test --karma-config=karma.ci.conf.js --no-progress",
     "publish": "npm run build && npm publish dist/centeva-core --access public"
   },
   "private": false,
