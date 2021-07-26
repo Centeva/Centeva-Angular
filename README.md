@@ -29,3 +29,6 @@ Please deploy an accurate version when publishing your changes, see below.
 3. Within your test project that you would like to use centeva-core run `npm link centeva-core`.
 4. Anytime you make a change in centeva-core run `npm run build` to rebuild the /dist folder.
 5. You will need to re-run your watch command in your centeva-core consuming application after any changes.
+
+# Actions
+Github actions are setup to run tests/lint on ever pr. Make sure they pass before merging!
