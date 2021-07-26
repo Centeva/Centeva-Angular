@@ -1,5 +1,7 @@
 # Centeva-Core
 
+This is an open source project. If you would like to contribute, check out the [repo](https://github.com/Centeva/Centeva-Angular).
+
 - [Installation](#installation)
 - [Components](#components)
     - [Loading](#loading-component)

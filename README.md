@@ -1,11 +1,15 @@
 # CentevaCore
+
+[NPM Package](https://www.npmjs.com/package/centeva-core)
+
+Using npm:
+
+```bash
+$ npm i centeva-core --save
+```
+
 ## Angular Version (10 or greater) required
 Centeva Core is a Common Angular package designed to contain reusable Angular pipes, directives, services, and Components.
-
-
-# Making Changes
-
-It is recommended to not add anything to this repository until it is completely working within an existing project, as it may be hard to actively develop while using a package.
 
 ## Versioning
 Please deploy an accurate version when publishing your changes, see below.
@@ -15,11 +19,6 @@ Please deploy an accurate version when publishing your changes, see below.
 1. **MAJOR** version when you make incompatible API changes.
 2. **MINOR** version when you add functionality in a backwards compatible manner.
 3. **PATCH** version when you make backwards compatible bug fixes.
-## Package and Publish
-
-
-- `npm run build` will package any changes up to the /dist folder.
-- `npm run publish` will publish the dist/ folder as a new version to NPM.
 
 # Setting Up NPM link
 
