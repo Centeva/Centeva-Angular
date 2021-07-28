@@ -31,4 +31,4 @@ Please deploy an accurate version when publishing your changes, see below.
 5. You will need to re-run your watch command in your centeva-core consuming application after any changes.
 
 # Actions
-Github actions are setup to run tests/lint on ever pr. Make sure they pass before merging!
+Github actions are setup to run tests/lint on ever pr. Make sure they pass before merging! other change!
