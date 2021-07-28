@@ -55,7 +55,7 @@ let isLoading = true;
 ```
 Loading Preview
 
-<img src="src/assets/loading-example.png" alt="Loading Preview" width="300"/>
+<img src="https://github.com/Centeva/Centeva-Angular/blob/master/projects/centeva-core/src/assets/loading-example.png" alt="Loading Preview" width="300"/>
 &nbsp;
 &nbsp;
 
@@ -81,7 +81,7 @@ let displayedColumns: TableColumn[];
 ```
 Table Preview
 
-<img src="src/assets/table-example.png" alt="Table Preview" width="500"/>
+<img src="https://github.com/Centeva/Centeva-Angular/blob/master/projects/centeva-core/src/assets/table-example.png" alt="Table Preview" width="500"/>
 
 &nbsp;
 &nbsp;
