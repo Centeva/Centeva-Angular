@@ -39,7 +39,8 @@ jobs:
       - name: Publish
         run: |
           npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
-          npm publish --ignore-scripts --tag ${{ needs.get_semver.outputs.semVer }}
+          npm version ${{ needs.get_semver.outputs.semVer }} --git-tag-version=false
+          npm publish --ignore-scripts
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   create_tag:
