@@ -49,9 +49,9 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://cadensorenson@bitbucket.org/cadensorenson/centeva-angular.git"
+    "url": "git+https://github.com/Centeva/Centeva-Angular.git"
   },
   "author": "",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/cadensorenson/centeva-angular#readme"
+  "homepage": "https://github.com/Centeva/Centeva-Angular"
 }
