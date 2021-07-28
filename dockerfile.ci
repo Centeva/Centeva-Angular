@@ -11,10 +11,9 @@ RUN addgroup -S ctnggroup \
 RUN mkdir -p /app \
   && chown -R ctnguser /app
 
-# USER ctnguser
+USER ctnguser
 
 ENV CHROME_BIN=/user/bin/chromium-browser
-
 
 COPY ./package.json /app/package.json
 COPY ./projects/centeva-core/package.json /app/projects/centeva-core/package.json
@@ -26,4 +25,4 @@ COPY . /app
 
 WORKDIR /app
 ENTRYPOINT [ "npm", "run" ]
-CMD [ "test" ]
+CMD [ "test-ci" ]
