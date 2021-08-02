@@ -8,7 +8,7 @@ export class DatePipe implements PipeTransform {
     if (args) {
       return DateTime.fromISO(value).toFormat(args);
     } else {
-      return DateTime.fromISO(value).toFormat('YYYY-MM-DD');
+      return DateTime.fromISO(value).toFormat('yyyy-MM-dd');
     }
   }
 }
