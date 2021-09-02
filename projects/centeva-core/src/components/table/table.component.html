@@ -93,7 +93,7 @@
       </th>
 
       <ng-container>
-        <td [hidden]="tableLoading" #el *matCellDef="let element" [ngStyle]="column.Styles || null"  [title]="column.HoverDetails ? column.HoverDetails(column, element) : ''" (click)="column.Link($event, element[column.Property])">
+        <td [hidden]="tableLoading" #el *matCellDef="let element" [ngStyle]="column.Styles || null"  [title]="column.HoverDetails ? column.HoverDetails(column, element) : ''" (click)="column.Link ? column.Link($event, element[column.Property]) : null">
           <!-- dynamic pipe will load and use any pipe passed in from the Column object.  It will use any values if available, otherwise it will use the td element. -->
           {{ (element[column.Property] | dynamic: column.Pipe?.Pipe:column.Pipe?.Values || el )}}
         </td>
