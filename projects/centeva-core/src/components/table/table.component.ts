@@ -272,9 +272,4 @@ export class TableComponent implements OnInit {
   emitSearchChanged() {
     this.searchChanged.emit(this.currentFilter);
   }
-
-  rowEmit(row) {
-    console.log(row);
-    this.rowSelected.emit(row);
-  }
 }
