@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import * as _ from 'lodash';
 import { DateTime } from 'luxon';
 import { ColumnDataTypes } from '../../common/constants/ColumnDataTypes';
@@ -8,7 +8,7 @@ import { SortStates } from '../../common/constants/SortStates';
 import { IColumnSortState } from '../../common/interfaces/IColumnSortState';
 import { SearchCriteriaRequest } from '../../common/models/SearchCriteriaRequest';
 import { StringFilterCriteria } from '../../common/models/StringFilterCriteria';
-import { DateRangeColumn, TableColumn } from '../../common/models/table-column';
+import { ComparisonColumn, DateRangeColumn, TableColumn } from '../../common/models/table-column';
 
 
 @Component({
@@ -77,17 +77,7 @@ export class TableComponent implements OnInit {
         controls[x.Property + this.secondVal] = new FormControl(value2 || '');
       }
       if (x.DataType === ColumnDataTypes.COMPARISON) {
-       controls[x.Property] = new FormControl(currFilter ? this.setOperandTypeString(currFilter?.Operand, currFilter?.Value, currFilter?.Value2): '');
-
-        controls[x.Property+this.radioFormControl] = new FormControl(currFilter?.Operand || '');
-        controls[x.Property+Operands.GreaterThan] = new FormControl(currFilter?.Operand == Operands.GreaterThan ? currFilter?.Value : '');
-        controls[x.Property+Operands.LessThan] = new FormControl(currFilter?.Operand == Operands.LessThan ? currFilter?.Value : '');
-        controls[x.Property+Operands.Between] = new FormControl('');
-        controls[x.Property+Operands.Between + this.secondVal] = new FormControl('');
-        if (currFilter?.Operand === Operands.Between) {
-          controls[x.Property+Operands.Between] = new FormControl(currFilter?.Value);
-          controls[x.Property+Operands.Between + this.secondVal] = new FormControl(currFilter?.Value2);
-        }
+        this.setComparisonColumn(x, controls);
       }
       if (x.DataType === ColumnDataTypes.MULTISELECT) {
         const filters = this.currentFilter.FilterCriteriaOr.filter((filter) => filter.PropertyName === x.Property);
@@ -250,6 +240,26 @@ export class TableComponent implements OnInit {
     this.currentFilter.PageNumber = 1;
     this.emitSearchChanged();
 
+  }
+
+  private setComparisonColumn(column: ComparisonColumn, controls: {[key: string] : AbstractControl}) {
+    const currFilter = this.currentFilter?.FilterCriteria?.find(filter => filter.PropertyName === column.Property);
+
+    controls[column.Property] = new FormControl(currFilter ? this.setOperandTypeString(currFilter?.Operand, currFilter?.Value, currFilter?.Value2): '');
+    controls[column.Property + this.radioFormControl] = new FormControl(currFilter?.Operand || '');
+    controls[column.Property+Operands.GreaterThan] = new FormControl(currFilter?.Operand == Operands.GreaterThan ? currFilter?.Value : '');
+    controls[column.Property+Operands.LessThan] = new FormControl(currFilter?.Operand == Operands.LessThan ? currFilter?.Value : '');
+    controls[column.Property+Operands.Between] = new FormControl('');
+    controls[column.Property+Operands.Between + this.secondVal] = new FormControl('');
+    if (currFilter?.Operand === Operands.Between) {
+      controls[column.Property+Operands.Between] = new FormControl(currFilter?.Value);
+      controls[column.Property+Operands.Between + this.secondVal] = new FormControl(currFilter?.Value2);
+    }
+  }
+
+  public closeComparison(column: ComparisonColumn) {
+    column.ShowComparison = false;
+    this.setComparisonColumn(column, this.formGroup.controls);
   }
 
   private resetScroll() {
