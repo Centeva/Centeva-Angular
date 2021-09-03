@@ -73,7 +73,7 @@
               </mat-radio-button>
             </mat-radio-group>
             <div class="comparison-buttons">
-              <button mat-raised-button color="default" (click)="column.ShowComparison = false">Cancel</button>
+              <button mat-raised-button color="default" (click)="closeComparison(column);">Cancel</button>
               <button [disabled]="!formGroup.controls[column.Property+radioFormControl]?.value
               || (!formGroup.controls[column.Property+Operands.GreaterThan]?.value
               && !formGroup.controls[column.Property+Operands.LessThan]?.value
@@ -106,5 +106,5 @@
   <div class="loading-bar">
     <app-loading [hidden]="!tableLoading" loadingText="Loading Results.." ></app-loading>
   </div>
-  
+
 </div>
