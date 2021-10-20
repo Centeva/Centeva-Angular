@@ -3,14 +3,10 @@
   "version": "1.1.13",
   "peerDependencies": {
     "@angular/common": "~10.2.5",
-    "@angular/core": "~10.2.5"
-  },
-  "dependencies": {
+    "@angular/core": "~10.2.5",
     "@angular/animations": "~10.2.5",
     "@angular/cdk": "^12.1.1",
-    "@angular/common": "~10.2.5",
     "@angular/compiler": "~10.2.5",
-    "@angular/core": "~10.2.5",
     "@angular/forms": "~10.2.5",
     "@angular/material": "^11.2.3",
     "@angular/platform-browser": "~10.2.5",
@@ -23,23 +19,6 @@
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
-  },
-  "devDependencies": {
-    "@angular-devkit/build-angular": "^0.1002.3",
-    "@angular/cli": "~10.2.3",
-    "@angular/compiler-cli": "~10.2.5",
-    "@types/jasmine": "~3.8.0",
-    "@types/lodash": "^4.14.171",
-    "@types/luxon": "^1.27.1",
-    "@types/node": "^12.11.1",
-    "jasmine-core": "~3.8.0",
-    "karma": "~6.3.0",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage": "~2.0.3",
-    "karma-jasmine": "~4.0.0",
-    "karma-jasmine-html-reporter": "~1.7.0",
-    "ng-packagr": "^12.1.0",
-    "typescript": "^3.9.5"
   },
   "repository": {
     "type": "git",
