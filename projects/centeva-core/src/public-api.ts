@@ -8,12 +8,15 @@ export * from './directives/number-input.directive';
 export * from './directives/table-resizer.directive';
 export * from './directives/th-resizable.directive';
 export * from './directives/click-outside.directive';
+export * from './directives/infinite-scroll.directive';
 export * from './core-directives.module';
 
 // Pipes
 export * from './pipes/capitalize.pipe';
 export * from './pipes/celsiusToFahrenheit.pipe';
 export * from './pipes/date.pipe';
+export * from './pipes/filter-by.pipe';
+export * from './pipes/filter-by-or.pipe';
 export * from './pipes/highlight.pipe';
 export * from './pipes/middleDot.pipe';
 export * from './pipes/orderBy.pipe';
@@ -21,6 +24,7 @@ export * from './pipes/percentage.pipe';
 export * from './pipes/phoneNumber.pipe';
 export * from './pipes/reverse.pipe';
 export * from './pipes/dynamic.pipe';
+export * from './pipes/safe-html.pipe';
 export * from './pipes/safe-html.pipe';
 export * from './core-pipes.module';
 

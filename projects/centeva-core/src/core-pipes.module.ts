@@ -10,6 +10,8 @@ import { PhoneNumberPipe } from './pipes/phoneNumber.pipe';
 import { DynamicPipe } from './pipes/dynamic.pipe';
 import { ReversePipe } from './pipes/reverse.pipe';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { FilterByPipe } from './pipes/filter-by.pipe';
+import { FilterByOrPipe } from './pipes/filter-by-or.pipe';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     DynamicPipe,
     ReversePipe,
     SafeHtmlPipe,
+    FilterByPipe,
+    FilterByOrPipe
   ],
   exports: [
     CapitalizePipe,
@@ -37,6 +41,8 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     DynamicPipe,
     ReversePipe,
     SafeHtmlPipe,
+    FilterByPipe,
+    FilterByOrPipe
   ],
 })
 export class CorePipesModule {
