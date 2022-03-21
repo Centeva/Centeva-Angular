@@ -18,7 +18,6 @@ export class FilterByPipe implements PipeTransform {
       keys.forEach(k => {
         if(!x[k] || x[k].toString().toLocaleLowerCase().indexOf(argsDict[k].toString().toLocaleLowerCase()) === -1) {
           valid = false;
-          return;
         }
       })      
       return valid;
