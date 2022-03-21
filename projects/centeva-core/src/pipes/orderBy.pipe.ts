@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import * as _ from 'lodash';
+import { orderBy } from 'lodash';
 
 export enum SortOrder { Ascending = "asc", Descending = "desc" };
 
@@ -7,6 +7,11 @@ export enum SortOrder { Ascending = "asc", Descending = "desc" };
 export class OrderByPipe implements PipeTransform {
     transform(collection: any[], iteratees: string | string[], orders?: SortOrder | SortOrder[]) {
         if (!collection) return collection;
-        return _.orderBy(collection, iteratees, orders);
+        for (let i = 0; i < collection.length; ++i) {
+            if (typeof collection[i] === 'string')
+                collection[i] = (collection[i] as string).toLowerCase();
+        }
+
+        return orderBy(collection, iteratees, orders);
     }
 }
