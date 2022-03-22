@@ -12,15 +12,6 @@ describe('OrderBy Pipe tests', () => {
       expect(pipe).toBeTruthy();
     });
 
-    it('sorts by default', () => {
-      const pipe = new OrderByPipe();
-
-      const sortedArray = pipe.transform(testArray);
-
-      expect(sortedArray[0]).toBe(greenHat);
-      expect(sortedArray[1]).toBe(purpleShirt);
-      expect(sortedArray[2]).toBe(bluePants);
-    });
 
     it('sorts by name', () => {
       const pipe = new OrderByPipe();
