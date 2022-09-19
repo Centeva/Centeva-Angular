@@ -11,12 +11,13 @@ This is an open source project. If you would like to contribute, check out the [
     - [CelsiusToFahrenheit](#celsiustofahrenheit-pipe)
     - [Date](#date-pipe)
     - [Dynamic](#dynamic-pipe)
-    - [SafeHtml](#safehtml-pipe)
     - [HighLight](#highlight-pipe)
+    - [MiddleDot](#middledot-pipe)
+    - [OrderBy](#orderby-pipe)
+    - [Percentage](#percentage-pipe)
     - [PhoneNumber](#phone-number-pipe)
     - [Reverse](#reverse-pipe)
-    - [Percentage](#percentage-pipe)
-    - [MiddleDot](#middledot-pipe)
+    - [SafeHtml](#safehtml-pipe)
 - [Directives](#directives)
     - [ClickOutside](#clickoutside-directive)
     - [NumberInput](#numberinput-directive)
@@ -141,13 +142,37 @@ let searchText = 'test';
 ```html
 <a target="_blank" class="title" href="{{URL}}" [innerHtml]="Name | highlight: searchText | safeHtml"></a>
 ```
-### SafeHtml Pipe
 
-Bind to innerHtml safely with this pipe.
+### MiddleDot Pipe
 
 Usage:
 ```html
-<a target="_blank" class="title" href="{{URL}}" [innerHtml]="Name | safeHtml"></a>
+<div>{{'dotMe' | middleDot}}</div> === 'd∙o∙t∙M∙e'
+```
+
+### OrderBy Pipe
+
+The first argument after orderBy is a list of fields to sort by. The second argument is a list of sort orders for each field; if this list is omitted it sorts by ascending order. If both arguments are omitted, the original collection is returned unsorted.
+
+Usage:
+```javascript
+const myCollection = [
+    { lastName: 'Smith', firstName: 'John', age: 54 },
+    { lastName: 'Marsh', firstName: 'Isabella', age: 41 }
+    { lastName: 'Marsh', firstName: 'Franklin', age: 44 }];
+```
+```html
+<div *ngFor="col of myCollection | orderBy: ['lastName', 'age'], [SortOrder.Ascending, SortOrder.Descending]">
+    {{col.lastName}}, {{col.firstName}} - {{col.age}}
+</div>
+```
+
+### Percentage Pipe
+Return any value as a percentage
+
+Usage:
+```html
+<div>{{.872345 | percentage}}</div> === 87
 ```
 
 ### Phone Number Pipe
@@ -169,21 +194,14 @@ let arr = [1, 2, 3];
 <div>{{arr | reverse}}</div> === [3, 2, 1]
 ```
 
-### Percentage Pipe
-Return any value as a percentage
+### SafeHtml Pipe
+
+Bind to innerHtml safely with this pipe.
 
 Usage:
 ```html
-<div>{{.872345 | percentage}}</div> === 87
+<a target="_blank" class="title" href="{{URL}}" [innerHtml]="Name | safeHtml"></a>
 ```
-
-### MiddleDot Pipe
-
-Usage:
-```html
-<div>{{'dotMe' | middleDot}}</div> === 'd∙o∙t∙M∙e'
-```
-
 
 ## Directives
 

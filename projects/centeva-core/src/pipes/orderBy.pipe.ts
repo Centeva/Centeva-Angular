@@ -1,14 +1,17 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { orderBy } from 'lodash';
 
-import * as _ from 'lodash';
+export enum SortOrder { Ascending = "asc", Descending = "desc" };
 
 @Pipe({ name: 'orderBy' })
-export class OrderByPipe implements PipeTransform  {
-  public transform(array: any[], args?: any) {
-    if (args) {
-      return _.sortBy(array, args);
-    } else {
-      return _.sortBy(array);
+export class OrderByPipe implements PipeTransform {
+    transform(collection: any[], iteratees: string | string[], orders?: SortOrder | SortOrder[]) {
+        if (!collection) return collection;
+        for (let i = 0; i < collection.length; ++i) {
+            if (typeof collection[i] === 'string')
+                collection[i] = (collection[i] as string).toLowerCase();
+        }
+
+        return orderBy(collection, iteratees, orders);
     }
-  }
 }
