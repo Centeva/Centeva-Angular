@@ -10,6 +10,7 @@
   position: relative;
   top: 2px;
 }
+
 .sort-icon-selected {
   transition: .3s;
   font-size: 1rem;
@@ -19,8 +20,8 @@
   &:hover {
     font-size: 1.2rem;
   }
-
 }
+
 .sort-icon {
   transition: .3s;
   cursor: pointer;
@@ -32,15 +33,13 @@
   }
 }
 
-
 .table-wrapper-loading {
   overflow:hidden;
   height: 100%;
 }
+
 .table-wrapper {
-
   position: relative;
-
 
   .loading-bar {
     position: absolute;
@@ -55,51 +54,54 @@
     .comparison-container {
       position: relative;
 
-    }
-    .comparison {
-      position: absolute;
-      height: 245px;
-      background-color: white;
-      top: 0;
-      left: 0;
-      right: 0;
-      border: 1px solid lightgray;
-      z-index: 99;
-      box-shadow: 0px 0px 4px -2px black;
-      padding: 14px;
-      width: 245px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      .radio-buttons {
+      .comparison {
+        position: absolute;
+        height: 245px;
+        background-color: white;
+        top: 0;
+        left: 0;
+        right: 0;
+        border: 1px solid lightgray;
+        z-index: 99;
+        box-shadow: 0px 0px 4px -2px black;
+        padding: 14px;
+        width: 245px;
         display: flex;
-      }
-      .comparison-input {
-        border: 2px solid lightgray;
-        width: 207px;
-        margin-bottom: 10px;
-        margin-top: 7px;
-        padding: 8px 5px;
-        border-radius: 4px;
-        &:hover {
-          border: 2px solid var($dark);
+        flex-direction: column;
+        justify-content: space-between;
+  
+        .radio-buttons {
+          display: flex;
+        }
+  
+        .comparison-input {
+          border: 2px solid lightgray;
+          width: 207px;
+          margin-bottom: 10px;
+          margin-top: 7px;
+          padding: 8px 5px;
+          border-radius: 4px;
+          &:hover {
+            border: 2px solid var($dark);
+          }
+        }
+  
+        .negative-margin {
+          margin-top: -5px;
+        }
+  
+        .comparison-buttons {
+          display: flex;
+          justify-content: space-between;
+          margin: 0 30px;
         }
       }
-      .negative-margin {
-        margin-top: -5px;
-      }
-      .comparison-buttons {
-        display: flex;
-        justify-content: space-between;
-        margin: 0 30px;
-      }
     }
-    .column-header {
 
-    }
     ::ng-deep .mat-select-arrow {
       color: white;
     }
+
     .mat-form-field {
       width: 219px !important;
 
@@ -121,11 +123,16 @@
       }
     }
 
-    .table-row {
+    .clickable-row {
+      cursor: pointer;
+    }
+
+    .clickable-column {
       cursor: pointer;
     }
   }
 }
+
 ::ng-deep .resizer {
   cursor: col-resize;
   float: right;
@@ -140,6 +147,7 @@
   position: relative;
   top: 4px;
 }
+
 ::ng-deep .mat-form-field-suffix {
   display: flex;
 }
@@ -148,4 +156,10 @@
   display: flex !important;
   flex-direction: column;
   height: 50px;
+}
+
+.fixed-column {
+  ::ng-deep .resizer {
+    display: none;
+  }
 }

@@ -1,4 +1,4 @@
-import { OnInit, Pipe, PipeTransform } from '@angular/core';
+import { PipeTransform } from '@angular/core';
 import { ColumnDataTypes } from '../constants/ColumnDataTypes';
 import { Operands } from '../constants/Operands';
 import { SortStates } from '../constants/SortStates';
@@ -16,6 +16,11 @@ type TableColumnBase = {
   Link?: (event: any, values: any) => void;
   Tooltip?: string;
   Styles?: { [klass: string]: any; };
+  ContentStyles?: Record<string, string>;
+  ColumnHeaderStyles?: Record<string, string>;
+  IsColumnClickable?: boolean;
+  IsColumnResizable?: boolean;
+  IsColumnSortable?: boolean;
 };
 
 export type InputColumn = TableColumnBase & {
@@ -39,5 +44,8 @@ export type ComparisonColumn = TableColumnBase & {
   DataType: ColumnDataTypes.COMPARISON,
   ShowComparison: boolean;
 };
+export declare type CheckboxColumn = TableColumnBase & {
+  DataType: ColumnDataTypes.CHECKBOX
+};
 
-export type  TableColumn = MultiSelectColumn | SelectColumn | ComparisonColumn  | InputColumn | DateColumn | DateRangeColumn;
+export type  TableColumn = MultiSelectColumn | SelectColumn | ComparisonColumn  | InputColumn | DateColumn | DateRangeColumn | CheckboxColumn;

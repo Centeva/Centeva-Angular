@@ -1,6 +1,7 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import * as _ from 'lodash';
+import { remove } from 'lodash';
 import { DateTime } from 'luxon';
 import { ColumnDataTypes } from '../../common/constants/ColumnDataTypes';
 import { Operands } from '../../common/constants/Operands';
@@ -9,6 +10,9 @@ import { IColumnSortState } from '../../common/interfaces/IColumnSortState';
 import { SearchCriteriaRequest } from '../../common/models/SearchCriteriaRequest';
 import { StringFilterCriteria } from '../../common/models/StringFilterCriteria';
 import { ComparisonColumn, DateRangeColumn, TableColumn } from '../../common/models/table-column';
+import { TableCheckboxInfo } from '../../common/models/TableCheckboxInfo';
+import { TableEmittedCheckboxClick } from '../../common/models/TableEmittedCheckboxClick';
+import { TableEmittedColumnClick } from '../../common/models/TableEmittedColumnClick';
 
 
 @Component({
@@ -33,22 +37,27 @@ export class TableComponent implements OnInit {
   get dataSource(): any {
     return this._dataSource;
   }
-  @Input() tableLoading = false;
+  @Input() tableLoading: boolean = false;
+  @Input() tableLoadingText: string = "Loading Results..";
+  @Input() isRowClickable: boolean = true;
   @Output() searchChanged = new EventEmitter<SearchCriteriaRequest>();
   @Output() rowSelected = new EventEmitter();
+  @Output() columnSelected = new EventEmitter<TableEmittedColumnClick>();
+  @Output() checkboxSelected = new EventEmitter<TableEmittedCheckboxClick>();
 
   public SortStates = SortStates;
   public ColumnSortState: IColumnSortState = {SortDirection : this.SortStates.NONE, SortProperty: ''}
   public ColumnDataTypes = ColumnDataTypes;
-  public columnNames = [];
+  public columnNames: string[] = [];
   public lastPage: number;
-  public timeout = null;
-  public timeoutOr = null;
+  public timeout: any = null;
+  public timeoutOr: any = null;
   public formGroup: FormGroup ;
   public Operands = Operands;
   public radioFormControl = 'Radio';
   public secondVal = '2';
   public tableWrapperId = 'table-wrapper-id';
+  public checkboxModels: Record<string, TableCheckboxInfo> = {};
 
   private _displayedColumns: TableColumn[];
   private _dataSource: any;
@@ -62,7 +71,7 @@ export class TableComponent implements OnInit {
 
   private setupForm() {
     this.columnNames = this.displayedColumns?.map(x => x.Name);
-    const controls = {};
+    const controls: any = {};
     this.displayedColumns?.forEach(x => {
       const currFilter = this.currentFilter?.FilterCriteria?.find(filter => filter.PropertyName === x.Property);
        // Set property Value
@@ -80,8 +89,15 @@ export class TableComponent implements OnInit {
         this.setComparisonColumn(x, controls);
       }
       if (x.DataType === ColumnDataTypes.MULTISELECT) {
-        const filters = this.currentFilter.FilterCriteriaOr.filter((filter) => filter.PropertyName === x.Property);
-        controls[x.Property] = new FormControl(filters.map(f => f.Value) || '');
+        const filters = this.currentFilter?.FilterCriteriaOr.filter((filter) => filter.PropertyName === x.Property);
+        controls[x.Property] = new FormControl(filters?.map(f => f.Value) || '');
+      }
+      if (x.DataType === ColumnDataTypes.CHECKBOX) {
+        this.checkboxModels[x.Property] = <TableCheckboxInfo> {
+          AnyItemSelected: false,
+          AllItemsSelected: false,
+          SelectionModel: new SelectionModel<any>(true, [])
+        };
       }
     });
 
@@ -146,7 +162,7 @@ export class TableComponent implements OnInit {
     this.currentFilter.FilterCriteria.push(newFilter);
   }
 
-  public clearFilter(column: TableColumn, event) {
+  public clearFilter(column: TableColumn, event: any) {
     event.stopPropagation();
 
     this.formGroup.controls[column.Property].setValue(null);
@@ -188,12 +204,12 @@ export class TableComponent implements OnInit {
    // Debouncing our changes
    clearTimeout(this.timeoutOr);
    this.timeoutOr = setTimeout(() => {
-     this.currentFilter.FilterCriteriaOr = _.remove(this.currentFilter.FilterCriteriaOr, (filter) => {
+     this.currentFilter.FilterCriteriaOr = remove(this.currentFilter.FilterCriteriaOr, (filter) => {
         return filter.PropertyName !== column.Property;
      });
 
      const values = this.formGroup.controls[column.Property].value || [];
-     values.forEach((val) => {
+     values.forEach((val: any) => {
       this.currentFilter.FilterCriteriaOr.push(new StringFilterCriteria ({
         Operand: column.Operand || Operands.Contains,
         PropertyName: column.Property,
@@ -269,7 +285,67 @@ export class TableComponent implements OnInit {
     }
   }
 
-  emitSearchChanged() {
+  public onRowClick(row: Record<any, any>): void {
+    if (!this.isRowClickable) return;
+    this.rowSelected.emit(row)
+  }
+
+  public onColumnClick(event: MouseEvent, property: string, row: Record<any, any>): void {
+    if (this.isRowClickable) return;
+    let columnToEmit: TableEmittedColumnClick = <TableEmittedColumnClick>{
+      MouseEvent: event,
+      ColumnName: property,
+      Row: row
+    };
+    this.columnSelected.emit(columnToEmit);
+  }
+
+  public emitSearchChanged(): void {
     this.searchChanged.emit(this.currentFilter);
+  }
+
+  public emitCheckbox(columnName: string): void {
+    let checkboxToEmit: TableEmittedCheckboxClick = <TableEmittedCheckboxClick>{
+      ColumnName: columnName,
+      SelectionModel: this.checkboxModels[columnName]?.SelectionModel
+    }
+    this.checkboxSelected.emit(checkboxToEmit);
+  }
+
+  public checkboxMasterToggle(columnName: string): void {
+    this.allItemsInColumnSelected(columnName)
+      ? this.checkboxModels[columnName]?.SelectionModel?.clear()
+      : this.dataSource?.Records?.forEach((record: any) => { this.checkboxModels[columnName]?.SelectionModel?.select(record) });
+    this.checkForCheckboxStatus(columnName);
+    this.emitCheckbox(columnName);
+  }
+
+  public checkboxItemToggle(row: any, columnName: string): void {
+    this.checkboxModels[columnName]?.SelectionModel.toggle(row);
+    this.checkForCheckboxStatus(columnName);
+    this.emitCheckbox(columnName);
+  }
+
+  private allItemsInColumnSelected(columnName: string): boolean {
+    return this.checkboxModels[columnName]?.SelectionModel?.hasValue() &&
+      this.checkboxModels[columnName]?.SelectionModel?.selected?.length === this.dataSource?.Records?.length;
+  }
+
+  private anyItemInColumnSelected(columnName: string): boolean {
+    return this.checkboxModels[columnName]?.SelectionModel?.hasValue() && this.checkboxModels[columnName]?.SelectionModel?.selected?.length > 0;
+  }
+
+  private checkForCheckboxStatus(columnName: string): void {
+    if (!(columnName in this.checkboxModels)) return;
+
+    this.checkboxModels[columnName].AnyItemSelected = this.anyItemInColumnSelected(columnName);
+    this.checkboxModels[columnName].AllItemsSelected = this.allItemsInColumnSelected(columnName);
+  }
+
+  public clearCheckbox(columnName: string): void {
+    if (!(columnName in this.checkboxModels)) return;
+
+    this.checkboxModels[columnName].SelectionModel.clear();
+    this.checkForCheckboxStatus(columnName);
   }
 }
