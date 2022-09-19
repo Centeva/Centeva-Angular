@@ -4,8 +4,8 @@ on:
     types: [opened, reopened, synchronize, edited]
 jobs:
   checks:
-    name: Lint and test Angular client.
-    runs-on: [self-hosted, linux]
+    name: Test Angular client.
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v1
