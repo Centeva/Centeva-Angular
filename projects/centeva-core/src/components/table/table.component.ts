@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { remove } from 'lodash';
 import { DateTime } from 'luxon';
@@ -20,7 +20,7 @@ import { TableEmittedColumnClick } from '../../common/models/TableEmittedColumnC
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit, OnDestroy {
+export class TableComponent implements OnInit {
 
   @Input() currentFilter: SearchCriteriaRequest;
   @Input() set displayedColumns(value: TableColumn[]) {
@@ -48,7 +48,7 @@ export class TableComponent implements OnInit, OnDestroy {
   public SortStates = SortStates;
   public ColumnSortState: IColumnSortState = {SortDirection : this.SortStates.NONE, SortProperty: ''}
   public ColumnDataTypes = ColumnDataTypes;
-  public columnNames: any[] = [];
+  public columnNames: string[] = [];
   public lastPage: number;
   public timeout: any = null;
   public timeoutOr: any = null;
@@ -68,18 +68,6 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() { }
-
-  ngOnDestroy() {
-    for (const key in this.checkboxModels) {
-      const value = this.checkboxModels[key];
-      value?.SelectionModel?.clear();
-      let checkboxToEmit: TableEmittedCheckboxClick = <TableEmittedCheckboxClick>{
-        ColumnName: key,
-        SelectionModel: value?.SelectionModel
-      }
-      this.checkboxSelected.emit(checkboxToEmit);
-    }
-  }
 
   private setupForm() {
     this.columnNames = this.displayedColumns?.map(x => x.Name);
