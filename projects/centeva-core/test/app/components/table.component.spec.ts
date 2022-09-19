@@ -26,7 +26,8 @@ describe('Table Component tests', () => {
       { Name: 'Date1', Placeholder: 'Date1', DataType: ColumnDataTypes.DATEPICKRANGE, Property: 'ActualCompletionDate', Enabled: true },
       { Name: 'Date2', Placeholder: 'Date2', DataType: ColumnDataTypes.DATEPICKRANGE, Property: 'ApplicationDate', Enabled: true },
       { Name: 'Comparison1', Placeholder: 'Comparison1', DataType: ColumnDataTypes.COMPARISON, Property: 'ProjectAge', ShowComparison: true, Enabled: true},
-      { Name: 'MultiSelect1', Placeholder: 'MultiSelect1', DataType: ColumnDataTypes.MULTISELECT, Options: ['ACTIVE', 'COMPLETED'], Property: 'ProjectStatusTypeId', Enabled: true}
+      { Name: 'MultiSelect1', Placeholder: 'MultiSelect1', DataType: ColumnDataTypes.MULTISELECT, Options: ['ACTIVE', 'COMPLETED'], Property: 'ProjectStatusTypeId', Enabled: true},
+      { Name: 'Checkbox1', Placeholder: 'Checkbox1', DataType: ColumnDataTypes.CHECKBOX, Property: 'Checkbox', Enabled: true }
     ];
 
     dataSource = {
@@ -72,6 +73,7 @@ describe('Table Component tests', () => {
     spyOn(component, 'emitSearchChanged').and.callThrough();
     spyOn(component, 'removeTimesFromDate').and.callThrough();
     spyOn(component, 'filterValueChanged').and.callThrough();
+    spyOn(component, 'emitCheckbox').and.callThrough();
 
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -159,6 +161,44 @@ describe('Table Component tests', () => {
     expect(component.currentFilter.FilterCriteria[0].Operand).toBe(Operands.GreaterThan);
     expect(component.currentFilter.FilterCriteria[0].Value).toBe('20');
     expect(component.emitSearchChanged).toHaveBeenCalled();
+  });
+
+  it('checkbox master toggle', () => {
+    const column = component.displayedColumns[5];
+
+    component.checkboxMasterToggle(column.Property);
+    
+    expect(component.emitCheckbox).toHaveBeenCalled();
+
+    let checkboxData = component.checkboxModels[column.Property]
+    expect(checkboxData.SelectionModel.selected.length).toBe(dataSource.Records.length);
+    expect(checkboxData.AllItemsSelected).toBe(true);
+    expect(checkboxData.AnyItemSelected).toBe(true);
+  });
+
+  it('checkbox toggle', () => {
+    const column = component.displayedColumns[5];
+
+    component.checkboxItemToggle(dataSource.Records[0], column.Property);
+
+    expect(component.emitCheckbox).toHaveBeenCalled();
+
+    let checkboxData = component.checkboxModels[column.Property]
+    expect(checkboxData.SelectionModel.selected.length).toBe(1);
+    expect(checkboxData.AllItemsSelected).toBe(false);
+    expect(checkboxData.AnyItemSelected).toBe(true);
+  });
+
+  it('checkbox clear', () => {
+    const column = component.displayedColumns[5];
+
+    component.checkboxMasterToggle(column.Property);
+    component.clearCheckbox(column.Property);
+
+    let checkboxData = component.checkboxModels[column.Property];
+    expect(checkboxData.SelectionModel.selected.length).toBe(0);
+    expect(checkboxData.AllItemsSelected).toBe(false);
+    expect(checkboxData.AnyItemSelected).toBe(false);
   });
 
   afterEach( () => {

@@ -45,7 +45,9 @@ export * from './common/models/AdvancedSearchResultsPaged';
 export * from './common/models/SearchCriteriaRequest';
 export * from './common/models/StringFilterCriteria';
 export * from './common/models/table-column';
-
+export * from './common/models/TableCheckboxInfo';
+export * from './common/models/TableEmittedCheckboxClick';
+export * from './common/models/TableEmittedColumnClick';
 
 // Components
 export * from './components/loading/loading.component';
