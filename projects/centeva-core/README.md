@@ -64,11 +64,28 @@ Loading Preview
 
 `This table works with the PREQL nuget package. You will want to implement that on the backend to use this table.`
 
-Module Import 
+#### Module Import 
 ```typescript
 import {TableModule} from 'centeva-core';
 ```
-Usage:
+
+#### API
+##### Properties
+| Name | Description |
+| ---- | ----------- |
+| @Input('isLoading')</br>type: boolean | Whether or not data is loading. When this is set to true, a spinner will overlay on top of the table
+| @Input('tableLoadingText')</br>type: string | Text that will appear when the table data is loading. Defaults to 'Loading Results..'
+| @Input('dataSource')</br>type: AdvancedSearchResultsPage | Data source
+| @Input('currentFilter')</br>type: SearchCriteriaRequest |  Contains infomration on the current search request.
+| @Input('displayedColumns')</br>type: TableColumn[] | This contains a list of the columns to display and the column types.
+| @Input('isRowClickable')</br>type: boolean | If enabled, clicking anywhere on the table row will event the same event. Defaults to true.
+| @Output('searchChanged')</br>type: SearchCriteriaRequest | Outputs when a filter or sort direction is changed.
+| @Output('rowSelected') | Outputs the row that was just clicked. Note: this is only available if the input `isRowClickable` is set to true.
+| @Output('columnSelected')</br>Type: TableEmittedColumnClick | Outputs the column name, and the data in that row when a column was clicked. Note: this is only emitted if the column has the property `isColumnClickable`
+| @Output('checkboxSelected')</br>Type: TableEmittedCheckboxClick | Outputs the column name and a `SelectionModel` containing a list of rows that have been checked. Note: this only applies to column that have the `CHECKBOX` type.
+
+
+#### Usage:
 ```typescript
 import {AdvancedSearchResultsPaged, SearchCriteriaRequest, TableColumn} from 'centeva-core';
 let isLoading: boolean;
@@ -80,7 +97,8 @@ let displayedColumns: TableColumn[];
 <app-table [tableLoading]="isLoading" [dataSource]="dataSource" [currentFilter]="currentFilter" [displayedColumns]="displayedColumns" 
 (searchChanged)="searchChanged($event)" (rowSelected)="rowSelected($event)"></app-table>
 ```
-Table Preview
+
+#### Table Preview
 
 <img src="https://github.com/Centeva/Centeva-Angular/blob/master/projects/centeva-core/src/assets/table-example.png" alt="Table Preview" width="500"/>
 
