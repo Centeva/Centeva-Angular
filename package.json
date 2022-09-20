@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~12.2.16",
     "@angular/router": "~12.2.16",
     "angular-material": "^1.2.2",
+    "assert": "^2.0.0",
     "lodash": "^4.17.21",
     "luxon": "^1.28.0",
     "material-design-icons": "^3.0.1",
