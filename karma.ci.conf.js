@@ -37,5 +37,8 @@ module.exports = function (config) {
     autoWatch: false,
     singleRun: true,
     browserNoActivityTimeout: 40000,
+    files: [
+      'projects/centeva-core/test/global-variables.js'
+    ]
   });
 };
