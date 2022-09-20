@@ -45,7 +45,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "ng-packagr": "^13.3.1",
-    "typescript": "^4.6.4"
+    "typescript": "^4.5.2"
   },
   "description": "Centeva Core is a Common Angular package designed to contain reusable Angular pipes, directives, services, and Components.",
   "main": "index.js",
