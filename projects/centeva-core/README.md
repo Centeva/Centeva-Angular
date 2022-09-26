@@ -79,6 +79,7 @@ import {TableModule} from 'centeva-core';
 | @Input('currentFilter')</br>type: SearchCriteriaRequest |  Contains infomration on the current search request.
 | @Input('displayedColumns')</br>type: TableColumn[] | This contains a list of the columns to display and the column types.
 | @Input('isRowClickable')</br>type: boolean | If enabled, clicking anywhere on the table row will event the same event. Defaults to true.
+| @Input('noResultsText')</br>type: string | Text that will be displayed on table when there are no results. Defaults to 'No results to display.'
 | @Output('searchChanged')</br>type: SearchCriteriaRequest | Outputs when a filter or sort direction is changed.
 | @Output('rowSelected') | Outputs the row that was just clicked. Note: this is only available if the input `isRowClickable` is set to true.
 | @Output('columnSelected')</br>Type: TableEmittedColumnClick | Outputs the column name, and the data in that row when a column was clicked. Note: this is only emitted if the column has the property `isColumnClickable`
