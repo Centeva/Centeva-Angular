@@ -40,6 +40,7 @@ export class TableComponent implements OnInit {
   @Input() tableLoading: boolean = false;
   @Input() tableLoadingText: string = "Loading Results..";
   @Input() isRowClickable: boolean = true;
+  @Input() noResultsText: string = "No results to display."
   @Output() searchChanged = new EventEmitter<SearchCriteriaRequest>();
   @Output() rowSelected = new EventEmitter();
   @Output() columnSelected = new EventEmitter<TableEmittedColumnClick>();

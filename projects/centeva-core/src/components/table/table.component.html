@@ -126,5 +126,8 @@
   <div class="loading-bar">
     <app-loading [hidden]="!tableLoading" [loadingText]="tableLoadingText" ></app-loading>
   </div>
+  <div class="no-items-to-show" *ngIf="!tableLoading && dataSource?.Records?.length === 0">
+    {{noResultsText}}
+  </div>
 
 </div>
