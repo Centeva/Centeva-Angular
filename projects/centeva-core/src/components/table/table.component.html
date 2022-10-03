@@ -89,8 +89,8 @@
           <ng-container *ngIf="column.DataType === ColumnDataTypes.CHECKBOX">
             <mat-checkbox color="primary"
               (change)="$event ? checkboxMasterToggle(column.Property) : null"
-              [checked]="checkboxModels[column.Property]?.AllItemsSelected"
-              [indeterminate]="checkboxModels[column.Property]?.AnyItemSelected && !checkboxModels[column.Property]?.AllItemsSelected">
+              [checked]="checkboxModels[column.Property]?.AllDisplayedItemsSelected"
+              [indeterminate]="checkboxModels[column.Property]?.AnyDisplayedItemSelected && !checkboxModels[column.Property]?.AllDisplayedItemsSelected">
             </mat-checkbox>
           </ng-container>
   
@@ -109,8 +109,8 @@
         <td [hidden]="tableLoading" #el *matCellDef="let element" [ngStyle]="column.Styles || null"  [title]="column.HoverDetails ? column.HoverDetails(column, element) : ''" (click)="column.Link ? column.Link($event, element[column.Property]) : null">
           <mat-checkbox *ngIf="column.DataType === ColumnDataTypes.CHECKBOX" color="primary" [ngStyle]="column.ContentStyles"
             (click)="$event.stopPropagation()"
-            (change)="$event ? checkboxItemToggle(element, column.Property) : null"
-            [checked]="checkboxModels[column.Property]?.SelectionModel?.isSelected(element)">
+            (change)="$event ? checkboxItemToggle(element?.Id, column.Property) : null"
+            [checked]="checkboxModels[column.Property]?.SelectionModel?.isSelected(element?.Id)">
           </mat-checkbox>
           <span [class.clickable-column]="column.IsColumnClickable" [ngStyle]="column.ContentStyles" (click)="column.IsColumnClickable ? onColumnClick($event, column.Property, element) : null">
             <!-- dynamic pipe will load and use any pipe passed in from the Column object.  It will use any values if available, otherwise it will use the td element. -->

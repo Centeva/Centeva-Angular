@@ -26,7 +26,6 @@
     "luxon": "^2.3.2",
     "material-design-icons": "^3.0.1",
     "moment": "^2.29.1",
-    "rxjs": "^7.5.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
   },

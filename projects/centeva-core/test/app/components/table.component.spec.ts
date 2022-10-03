@@ -42,6 +42,7 @@ describe('Table Component tests', () => {
       PageSize: 5,
       Records: [
         {
+          Id: 1,
           ProjectId: 1,
           ProjectTitle: "TestProject1",
           ProjectStatusTypeId: "ACTIVE",
@@ -50,6 +51,7 @@ describe('Table Component tests', () => {
           AgeInMonths: 50
         },
         {
+          Id: 2,
           ProjectId: 2,
           ProjectTitle: "TestProject2",
           ProjectStatusTypeId: "ACTIVE",
@@ -173,21 +175,21 @@ describe('Table Component tests', () => {
 
     let checkboxData = component.checkboxModels[column.Property]
     expect(checkboxData.SelectionModel.selected.length).toBe(dataSource.Records.length);
-    expect(checkboxData.AllItemsSelected).toBe(true);
-    expect(checkboxData.AnyItemSelected).toBe(true);
+    expect(checkboxData.AllDisplayedItemsSelected).toBe(true);
+    expect(checkboxData.AnyDisplayedItemSelected).toBe(true);
   });
 
   it('checkbox toggle', () => {
     const column = component.displayedColumns[5];
 
-    component.checkboxItemToggle(dataSource.Records[0], column.Property);
+    component.checkboxItemToggle(dataSource.Records[0]?.Id, column.Property);
 
     expect(component.emitCheckbox).toHaveBeenCalled();
 
     let checkboxData = component.checkboxModels[column.Property]
     expect(checkboxData.SelectionModel.selected.length).toBe(1);
-    expect(checkboxData.AllItemsSelected).toBe(false);
-    expect(checkboxData.AnyItemSelected).toBe(true);
+    expect(checkboxData.AllDisplayedItemsSelected).toBe(false);
+    expect(checkboxData.AnyDisplayedItemSelected).toBe(true);
   });
 
   it('checkbox clear', () => {
@@ -198,27 +200,27 @@ describe('Table Component tests', () => {
 
     let checkboxData = component.checkboxModels[column.Property];
     expect(checkboxData.SelectionModel.selected.length).toBe(0);
-    expect(checkboxData.AllItemsSelected).toBe(false);
-    expect(checkboxData.AnyItemSelected).toBe(false);
+    expect(checkboxData.AllDisplayedItemsSelected).toBe(false);
+    expect(checkboxData.AnyDisplayedItemSelected).toBe(false);
   });
 
   it('multiple checkboxes', () => {
     const checkboxOneColumn = component.displayedColumns[5];
     const checkboxTwoColumn = component.displayedColumns[6];
 
-    component.checkboxItemToggle(dataSource.Records[0], checkboxOneColumn.Property);
+    component.checkboxItemToggle(dataSource.Records[0]?.Id, checkboxOneColumn.Property);
     component.checkboxMasterToggle(checkboxTwoColumn.Property);
 
     let checkboxOneData = component.checkboxModels[checkboxOneColumn.Property];
     let checkboxTwoData = component.checkboxModels[checkboxTwoColumn.Property];
 
     expect(checkboxOneData.SelectionModel.selected.length).toBe(1);
-    expect(checkboxOneData.AllItemsSelected).toBe(false);
-    expect(checkboxOneData.AnyItemSelected).toBe(true);
+    expect(checkboxOneData.AllDisplayedItemsSelected).toBe(false);
+    expect(checkboxOneData.AnyDisplayedItemSelected).toBe(true);
   
     expect(checkboxTwoData.SelectionModel.selected.length).toBe(dataSource.Records.length);
-    expect(checkboxTwoData.AllItemsSelected).toBe(true);
-    expect(checkboxTwoData.AnyItemSelected).toBe(true);
+    expect(checkboxTwoData.AllDisplayedItemsSelected).toBe(true);
+    expect(checkboxTwoData.AnyDisplayedItemSelected).toBe(true);
   });
 
   afterEach( () => {
