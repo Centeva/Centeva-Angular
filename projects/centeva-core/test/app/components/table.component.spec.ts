@@ -175,7 +175,7 @@ describe('Table Component tests', () => {
 
     let checkboxData = component.checkboxModels[column.Property]
     expect(checkboxData.SelectionModel.selected.length).toBe(dataSource.Records.length);
-    // expect(checkboxData.AllDisplayedItemsSelected).toBe(true);
+    expect(checkboxData.AllDisplayedItemsSelected).toBe(true);
     expect(checkboxData.AnyDisplayedItemSelected).toBe(true);
   });
 
