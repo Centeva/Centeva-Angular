@@ -1,6 +1,6 @@
 {
   "name": "centeva-core",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "peerDependencies": {
     "@angular/common": "~13.3.11",
     "@angular/core": "~13.3.11",
@@ -18,7 +18,6 @@
     "luxon": "^2.3.2",
     "moment": "^2.29.1",
     "material-design-icons": "^3.0.1",
-    "rxjs": "^7.5.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
   },
