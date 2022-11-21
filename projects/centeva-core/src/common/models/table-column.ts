@@ -48,4 +48,4 @@ export declare type CheckboxColumn = TableColumnBase & {
   DataType: ColumnDataTypes.CHECKBOX
 };
 
-export type  TableColumn = MultiSelectColumn | SelectColumn | ComparisonColumn  | InputColumn | DateColumn | DateRangeColumn | CheckboxColumn;
+export type TableColumn = MultiSelectColumn | SelectColumn | ComparisonColumn | InputColumn | DateColumn | DateRangeColumn | CheckboxColumn;

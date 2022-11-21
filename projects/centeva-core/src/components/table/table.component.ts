@@ -110,6 +110,13 @@ export class TableComponent implements OnInit {
           SelectionModel: new SelectionModel<any>(true, [])
         };
       }
+      if (x.DataType === ColumnDataTypes.MULTISELECT || x.DataType === ColumnDataTypes.SELECT) {
+        x.Options.map(option => {
+          if (option?.Id != null) {
+            option.Id = option.Id.toString();
+          }
+        })
+      }
     });
 
     this.sortSetup();
@@ -346,6 +353,8 @@ export class TableComponent implements OnInit {
   }
 
   private allItemsInColumnSelected(columnName: string): boolean {
+    if (this.dataSource?.Records == null || this.dataSource?.Records?.length === 0) return false;
+
     let allItemsSelected: boolean = true;
     this.dataSource?.Records?.forEach(record => {
       if (!this.checkboxModels[columnName]?.SelectionModel?.isSelected(record?.Id)) {
