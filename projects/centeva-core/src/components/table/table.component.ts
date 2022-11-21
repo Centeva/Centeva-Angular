@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { remove } from 'lodash';
+import { cloneDeep, remove } from 'lodash';
 import { DateTime } from 'luxon';
 import { ColumnDataTypes } from '../../common/constants/ColumnDataTypes';
 import { Operands } from '../../common/constants/Operands';
@@ -111,6 +111,7 @@ export class TableComponent implements OnInit {
         };
       }
       if (x.DataType === ColumnDataTypes.MULTISELECT || x.DataType === ColumnDataTypes.SELECT) {
+        x.Options = cloneDeep(x.Options);
         x.Options.map(option => {
           if (option?.Id != null) {
             option.Id = option.Id.toString();
