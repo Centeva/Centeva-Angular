@@ -12,7 +12,7 @@ export class InfiniteScrollDirective {
   constructor(private elem: ElementRef, private renderer: Renderer2) { }
 
   ngAfterViewInit() {
-    let bottomMargin = this.elem.nativeElement.clientHeight * (this.infiniteScrollDistance / 100);
+    let bottomMargin = this.elem.nativeElement.scrollHeight * (this.infiniteScrollDistance / 100);
 
     // find if you are in a scrollable container
     let root = this.findScrollableParent(this.elem.nativeElement);
