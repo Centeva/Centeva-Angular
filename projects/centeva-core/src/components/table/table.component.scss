@@ -135,35 +135,35 @@
       cursor: pointer;
     }
   }
-}
 
-::ng-deep .resizer {
-  cursor: col-resize;
-  float: right;
-  margin-right: 10px;
-  height: 40px;
-  user-select: none;
-  z-index: 10;
-  background-clip: content-box;
-  padding: 0 5px;
-  width: 2px;
-  background-color: rgba(0, 0, 0, .42);
-  position: relative;
-  top: 4px;
-}
-
-::ng-deep .mat-form-field-suffix {
-  display: flex;
-}
-
-::ng-deep .mat-radio-label-content {
-  display: flex !important;
-  flex-direction: column;
-  height: 50px;
-}
-
-.fixed-column {
   ::ng-deep .resizer {
-    display: none;
+    cursor: col-resize;
+    float: right;
+    margin-right: 10px;
+    height: 40px;
+    user-select: none;
+    z-index: 10;
+    background-clip: content-box;
+    padding: 0 5px;
+    width: 2px;
+    background-color: rgba(0, 0, 0, .42);
+    position: relative;
+    top: 4px;
+  }
+  
+  ::ng-deep .mat-form-field-suffix {
+    display: flex;
+  }
+  
+  ::ng-deep .mat-radio-label-content {
+    display: flex !important;
+    flex-direction: column;
+    height: 50px;
+  }
+  
+  .fixed-column {
+    ::ng-deep .resizer {
+      display: none;
+    }
   }
 }

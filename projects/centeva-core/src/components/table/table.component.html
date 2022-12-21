@@ -54,7 +54,7 @@
           </mat-form-field>
   
           <!-- COMPARISON TYPES -->
-          <ng-container class="comparison-container" *ngIf="column.DataType == ColumnDataTypes.COMPARISON">
+          <span class="comparison-container" *ngIf="column.DataType == ColumnDataTypes.COMPARISON">
             <mat-form-field appearance="outline" class="colum-header" >
               <mat-label>{{column.Name}}</mat-label>
               <input [formControlName]="column.Property" #inputType matInput numberInput (input)="filterValueChanged(column)" autocomplete="off"/>
@@ -83,7 +83,7 @@
                 && (!formGroup.controls[column.Property+Operands.Between]?.value || !formGroup.controls[column.Property+Operands.Between + secondVal]?.value))" mat-raised-button color="primary" (click)="column.ShowComparison = false; filterComparisonChanged(column)">Apply</button>
               </div>
             </div>
-          </ng-container>
+          </span>
 
           <!-- CHECKBOX TYPES -->
           <ng-container *ngIf="column.DataType === ColumnDataTypes.CHECKBOX">
