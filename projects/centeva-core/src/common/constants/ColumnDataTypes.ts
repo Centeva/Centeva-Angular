@@ -5,6 +5,7 @@ export enum ColumnDataTypes {
     DATEPICKRANGE = 'DatePickerRange',
     COMPARISON = 'Comparison',
     MULTISELECT = 'MultiSelect',
-    CHECKBOX = "Checkbox"
+    CHECKBOX = "Checkbox",
+    STATIC = "Static"
 }
 // TODO: Make multiselect option but need to edit preql to do that.

@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { cloneDeep, remove } from 'lodash';
 import { DateTime } from 'luxon';
@@ -10,9 +10,6 @@ import { IColumnSortState } from '../../common/interfaces/IColumnSortState';
 import { SearchCriteriaRequest } from '../../common/models/SearchCriteriaRequest';
 import { StringFilterCriteria } from '../../common/models/StringFilterCriteria';
 import { ComparisonColumn, DateRangeColumn, TableColumn } from '../../common/models/table-column';
-import { TableCheckboxInfo } from '../../common/models/TableCheckboxInfo';
-import { TableEmittedCheckboxClick } from '../../common/models/TableEmittedCheckboxClick';
-import { TableEmittedColumnClick } from '../../common/models/TableEmittedColumnClick';
 
 
 @Component({
@@ -33,16 +30,6 @@ export class TableComponent implements OnInit {
   @Input() set dataSource( value: any) {
     this._dataSource = value;
     this.resetScroll();
-
-    if (!this.tableLoading) {
-      setTimeout(() => {
-        for (let col in this.checkboxModels) {
-
-          this.checkForCheckboxStatus(col);
-          this.emitCheckbox(col);
-        }
-      });
-    }
   }
   get dataSource(): any {
     return this._dataSource;
@@ -53,8 +40,6 @@ export class TableComponent implements OnInit {
   @Input() noResultsText: string = "No results to display."
   @Output() searchChanged = new EventEmitter<SearchCriteriaRequest>();
   @Output() rowSelected = new EventEmitter();
-  @Output() columnSelected = new EventEmitter<TableEmittedColumnClick>();
-  @Output() checkboxSelected = new EventEmitter<TableEmittedCheckboxClick>();
 
   public SortStates = SortStates;
   public ColumnSortState: IColumnSortState = {SortDirection : this.SortStates.NONE, SortProperty: ''}
@@ -68,25 +53,30 @@ export class TableComponent implements OnInit {
   public radioFormControl = 'Radio';
   public secondVal = '2';
   public tableWrapperId = 'table-wrapper-id';
-  public checkboxModels: Record<string, TableCheckboxInfo> = {};
+  public checkboxAtLeastOneSelected: Record<string, boolean> = {};
+  public checkboxAllSelected: Record<string, boolean> = {};
+  public templateMapping: Record<string, TemplateRef<any>> = {};
+
+  @ViewChild('defaultColumn', { static: true }) defaultColumnRef: TemplateRef<undefined>;
+  @ViewChild('linkColumn', { static: true }) linkRef: TemplateRef<undefined>;
+  @ViewChild('checkboxColumn', { static: true }) checkboxRef: TemplateRef<undefined>;
 
   private _displayedColumns: TableColumn[];
   private _dataSource: any;
 
 
-  constructor(public fb: FormBuilder) {
-
-  }
+  constructor(public fb: FormBuilder) { }
 
   async ngOnInit() { }
 
   private setupForm() {
+    this.templateMapping = {};
     this.columnNames = this.displayedColumns?.map(x => x.Name);
     const controls: any = {};
     this.displayedColumns?.forEach(x => {
       const currFilter = this.currentFilter?.FilterCriteria?.find(filter => filter.PropertyName === x.Property);
        // Set property Value
-       controls[x.Property] = new FormControl(currFilter?.Value || '');
+      controls[x.Property] = new FormControl(currFilter?.Value || '');
 
       if (x.DataType === ColumnDataTypes.DATEPICKRANGE) {
         // We need to convert the dates from MM/dd/yyy format to a real date in order to be displayed in the input
@@ -103,12 +93,9 @@ export class TableComponent implements OnInit {
         const filters = this.currentFilter?.FilterCriteriaOr.filter((filter) => filter.PropertyName === x.Property);
         controls[x.Property] = new FormControl(filters?.map(f => f.Value) || '');
       }
-      if (x.DataType === ColumnDataTypes.CHECKBOX && !(x.Property in this.checkboxModels)) {
-        this.checkboxModels[x.Property] = <TableCheckboxInfo> {
-          AnyDisplayedItemSelected: false,
-          AllDisplayedItemsSelected: false,
-          SelectionModel: new SelectionModel<any>(true, [])
-        };
+      if (x.DataType === ColumnDataTypes.CHECKBOX && x.SelectedItems) {
+        x.SelectedItems.clear();
+        this.checkForCheckboxStatus(x);
       }
       if (x.DataType === ColumnDataTypes.MULTISELECT || x.DataType === ColumnDataTypes.SELECT) {
         x.Options = cloneDeep(x.Options);
@@ -118,6 +105,11 @@ export class TableComponent implements OnInit {
           }
         })
       }
+
+      if (x.Template) this.templateMapping[x.Property] = x.Template;
+      else if (x.Link) this.templateMapping[x.Property] = this.linkRef;
+      else if (x.SelectedItems) this.templateMapping[x.Property] = this.checkboxRef;
+      else this.templateMapping[x.Property] = this.defaultColumnRef;
     });
 
     this.sortSetup();
@@ -309,56 +301,30 @@ export class TableComponent implements OnInit {
     this.rowSelected.emit(row)
   }
 
-  public onColumnClick(event: MouseEvent, property: string, row: Record<any, any>): void {
-    if (this.isRowClickable) return;
-    let columnToEmit: TableEmittedColumnClick = <TableEmittedColumnClick>{
-      MouseEvent: event,
-      ColumnName: property,
-      Row: row
-    };
-    this.columnSelected.emit(columnToEmit);
-  }
-
   public emitSearchChanged(): void {
     this.searchChanged.emit(this.currentFilter);
   }
 
-  public emitCheckbox(columnName: string): void {
-    let checkboxToEmit: TableEmittedCheckboxClick = <TableEmittedCheckboxClick>{
-      ColumnName: columnName,
-      AnyDisplayedItemSelected: this.checkboxModels[columnName]?.AnyDisplayedItemSelected,
-      AllDisplayedItemsSelected: this.checkboxModels[columnName]?.AllDisplayedItemsSelected,
-      SelectionModel: this.checkboxModels[columnName]?.SelectionModel
-    }
-    this.checkboxSelected.emit(checkboxToEmit);
+  public checkboxMasterToggle(column: TableColumn): void {
+    if (!column.SelectedItems) return;
+
+    this.allItemsInSelectionModelSelected(column.SelectedItems)
+      ? this.dataSource?.Records?.forEach(record => column.SelectedItems?.deselect(record))
+      : this.dataSource?.Records?.forEach(record => column.SelectedItems?.select(record));
+    this.checkForCheckboxStatus(column);
   }
 
-  public checkboxMasterToggle(columnName: string): void {
-    this.allItemsInColumnSelected(columnName)
-      ? this.clearItemsInColumn(columnName)
-      : this.dataSource?.Records?.forEach((record: any) => { this.checkboxModels[columnName]?.SelectionModel?.select(record?.Id) });
-    this.checkForCheckboxStatus(columnName);
-    this.emitCheckbox(columnName);
+  public checkboxItemToggle(column: TableColumn, row: any): void {
+    column.SelectedItems.toggle(row);
+    this.checkForCheckboxStatus(column);
   }
 
-  public checkboxItemToggle(id: any, columnName: string): void {
-    this.checkboxModels[columnName]?.SelectionModel.toggle(id);
-    this.checkForCheckboxStatus(columnName);
-    this.emitCheckbox(columnName);
-  }
-
-  private clearItemsInColumn(columnName: string): void {
-    this.dataSource?.Records?.forEach(record => {
-      this.checkboxModels[columnName]?.SelectionModel?.deselect(record?.Id);
-    })
-  }
-
-  private allItemsInColumnSelected(columnName: string): boolean {
+  private allItemsInSelectionModelSelected(selectionModel: SelectionModel<any>): boolean {
     if (this.dataSource?.Records == null || this.dataSource?.Records?.length === 0) return false;
 
     let allItemsSelected: boolean = true;
     this.dataSource?.Records?.forEach(record => {
-      if (!this.checkboxModels[columnName]?.SelectionModel?.isSelected(record?.Id)) {
+      if (!selectionModel?.isSelected(record)) {
         allItemsSelected = false;
         return;
       }
@@ -366,10 +332,10 @@ export class TableComponent implements OnInit {
     return allItemsSelected;
   }
 
-  private anyDisplayedItemInColumnSelected(columnName: string): boolean {
+  private anyDisplayedItemInColumnSelected(selectionModel: SelectionModel<any>): boolean {
     let anyItemSelected: boolean = false;
     this.dataSource?.Records?.forEach(record => {
-      if (this.checkboxModels[columnName]?.SelectionModel?.isSelected(record?.Id)) {
+      if (selectionModel?.isSelected(record)) {
         anyItemSelected = true;
         return;
       }
@@ -377,18 +343,8 @@ export class TableComponent implements OnInit {
     return anyItemSelected;
   }
 
-  private checkForCheckboxStatus(columnName: string): void {
-    if (!(columnName in this.checkboxModels)) return;
-
-    this.checkboxModels[columnName].AnyDisplayedItemSelected = this.anyDisplayedItemInColumnSelected(columnName);
-    this.checkboxModels[columnName].AllDisplayedItemsSelected = this.allItemsInColumnSelected(columnName);
-  }
-
-  public clearCheckbox(columnName: string): void {
-    if (!(columnName in this.checkboxModels)) return;
-
-    this.checkboxModels[columnName].SelectionModel.clear();
-    this.checkForCheckboxStatus(columnName);
-    this.emitCheckbox(columnName);
+  private checkForCheckboxStatus(column: TableColumn): void {
+    this.checkboxAllSelected[column.Property] = this.allItemsInSelectionModelSelected(column.SelectedItems);
+    this.checkboxAtLeastOneSelected[column.Property] = this.anyDisplayedItemInColumnSelected(column.SelectedItems);
   }
 }

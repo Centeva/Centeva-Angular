@@ -1,4 +1,5 @@
-import { PipeTransform } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
+import { PipeTransform, TemplateRef } from '@angular/core';
 import { ColumnDataTypes } from '../constants/ColumnDataTypes';
 import { Operands } from '../constants/Operands';
 import { SortStates } from '../constants/SortStates';
@@ -12,40 +13,50 @@ type TableColumnBase = {
   Operand?: Operands;
   HoverDetails?: (col: TableColumn, element?: any) => {};
   Pipe?: {Pipe: PipeTransform, Values?: any};
-  // Link to another website.
-  Link?: (event: any, values: any) => void;
+  Link?: (row: any) => string;
   Tooltip?: string;
-  Styles?: { [klass: string]: any; };
-  ContentStyles?: Record<string, string>;
   ColumnHeaderStyles?: Record<string, string>;
-  IsColumnClickable?: boolean;
+  ContentStyles?: Record<string, string>;
+  Template?: TemplateRef<unknown>;
   IsColumnResizable?: boolean;
   IsColumnSortable?: boolean;
+  SelectedItems?: SelectionModel<any>;
+  HideColumnName?: boolean;
 };
 
 export type InputColumn = TableColumnBase & {
   DataType: ColumnDataTypes.INPUT
 };
+
 export type DateColumn = TableColumnBase & {
   DataType: ColumnDataTypes.DATEPICKER
 };
+
 export type DateRangeColumn = TableColumnBase & {
   DataType: ColumnDataTypes.DATEPICKRANGE
 };
+
 export type SelectColumn = TableColumnBase & {
   DataType: ColumnDataTypes.SELECT,
   Options: any[];
 };
+
 export type MultiSelectColumn = TableColumnBase & {
   DataType: ColumnDataTypes.MULTISELECT,
   Options: any[];
 };
+
 export type ComparisonColumn = TableColumnBase & {
   DataType: ColumnDataTypes.COMPARISON,
   ShowComparison: boolean;
 };
-export declare type CheckboxColumn = TableColumnBase & {
+
+export type CheckboxColumn = TableColumnBase & {
   DataType: ColumnDataTypes.CHECKBOX
 };
 
-export type TableColumn = MultiSelectColumn | SelectColumn | ComparisonColumn | InputColumn | DateColumn | DateRangeColumn | CheckboxColumn;
+export type StaticColumn = TableColumnBase & {
+  DataType: ColumnDataTypes.STATIC
+};
+
+export type TableColumn = MultiSelectColumn | SelectColumn | ComparisonColumn | InputColumn | DateColumn | DateRangeColumn | CheckboxColumn | StaticColumn;

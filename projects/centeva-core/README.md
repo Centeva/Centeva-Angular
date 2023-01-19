@@ -31,7 +31,7 @@ This is an open source project. If you would like to contribute, check out the [
 
 # Installation
 
-`Version 2 of this Package was built with Angular version 13. It is recommend you don't use this library with any application built with Angular < 13.`
+`Version 3 of this Package was built with Angular version 13. It is recommend you don't use this library with any application built with Angular < 13.`
 
 Using npm:
 
@@ -83,7 +83,6 @@ import {TableModule} from 'centeva-core';
 | @Output('searchChanged')</br>type: SearchCriteriaRequest | Outputs when a filter or sort direction is changed.
 | @Output('rowSelected') | Outputs the row that was just clicked. Note: this is only available if the input `isRowClickable` is set to true.
 | @Output('columnSelected')</br>Type: TableEmittedColumnClick | Outputs the column name, and the data in that row when a column was clicked. Note: this is only emitted if the column has the property `isColumnClickable`
-| @Output('checkboxSelected')</br>Type: TableEmittedCheckboxClick | Outputs the column name and a `SelectionModel` containing a list of rows that have been checked. Note: this only applies to column that have the `CHECKBOX` type.
 
 
 #### Usage:
