@@ -40,8 +40,8 @@
 
 .table-wrapper {
 
-  ::ng-deep th.mat-header-cell:first-of-type {
-    padding-left: 12px;
+  th.mat-header-cell:first-of-type {
+    padding-left: 12px !important;
   }
 
   position: relative;

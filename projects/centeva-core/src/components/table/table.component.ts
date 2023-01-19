@@ -55,6 +55,7 @@ export class TableComponent implements OnInit {
   public tableWrapperId = 'table-wrapper-id';
   public checkboxAtLeastOneSelected: Record<string, boolean> = {};
   public checkboxAllSelected: Record<string, boolean> = {};
+  public templateMapping: Record<string, TemplateRef<any>> = {};
 
   @ViewChild('defaultColumn', { static: true }) defaultColumnRef: TemplateRef<undefined>;
   @ViewChild('linkColumn', { static: true }) linkRef: TemplateRef<undefined>;
@@ -69,12 +70,13 @@ export class TableComponent implements OnInit {
   async ngOnInit() { }
 
   private setupForm() {
+    this.templateMapping = {};
     this.columnNames = this.displayedColumns?.map(x => x.Name);
     const controls: any = {};
     this.displayedColumns?.forEach(x => {
       const currFilter = this.currentFilter?.FilterCriteria?.find(filter => filter.PropertyName === x.Property);
        // Set property Value
-       controls[x.Property] = new FormControl(currFilter?.Value || '');
+      controls[x.Property] = new FormControl(currFilter?.Value || '');
 
       if (x.DataType === ColumnDataTypes.DATEPICKRANGE) {
         // We need to convert the dates from MM/dd/yyy format to a real date in order to be displayed in the input
@@ -103,6 +105,11 @@ export class TableComponent implements OnInit {
           }
         })
       }
+
+      if (x.Template) this.templateMapping[x.Property] = x.Template;
+      else if (x.Link) this.templateMapping[x.Property] = this.linkRef;
+      else if (x.SelectedItems) this.templateMapping[x.Property] = this.checkboxRef;
+      else this.templateMapping[x.Property] = this.defaultColumnRef;
     });
 
     this.sortSetup();
@@ -287,13 +294,6 @@ export class TableComponent implements OnInit {
     if (tableWrapper) {
       tableWrapper.scrollTop = 0;
     }
-  }
-
-  public setTemplate(column: TableColumn): TemplateRef<unknown> {
-    if (column.Template) return column.Template;
-    else if (column.Link) return this.linkRef;
-    else if (column.SelectedItems) return this.checkboxRef;
-    return this.defaultColumnRef;
   }
 
   public onRowClick(row: Record<any, any>): void {

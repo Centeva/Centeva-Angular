@@ -88,7 +88,7 @@
           <!-- CHECKBOX TYPES -->
           <ng-container *ngIf="column.DataType === ColumnDataTypes.CHECKBOX">
             <mat-checkbox color="primary"
-              (change)="$event ? checkboxMasterToggle(column) : null"
+              (change)="checkboxMasterToggle(column)"
               [checked]="checkboxAllSelected[column.Property]"
               [indeterminate]="!checkboxAllSelected[column.Property] && checkboxAtLeastOneSelected[column.Property]">
               <span *ngIf="!column.HideColumnName">{{column.Name}}</span>
@@ -113,7 +113,7 @@
 
       <ng-container>
         <td [hidden]="tableLoading" #el *matCellDef="let row" [title]="column.HoverDetails ? column.HoverDetails(column, row) : ''">
-          <ng-container [ngTemplateOutlet]="setTemplate(column)" [ngTemplateOutletContext]="{ column: column, row: row, el: el }"></ng-container>
+          <ng-container [ngTemplateOutlet]="templateMapping[column.Property] ?? defaultColumnRef" [ngTemplateOutletContext]="{ column: column, row: row, el: el }"></ng-container>
         </td>
       </ng-container>
     </ng-container>
@@ -136,7 +136,7 @@
 </ng-template>
 
 <ng-template #linkColumn let-column="column" let-row="row" let-el="el">
-  <a routerLink="{{column.Link(row)}}" [ngStyle]="column.ContentStyles" class="link">
+  <a [routerLink]="column.Link(row)" [ngStyle]="column.ContentStyles" class="link">
     {{ (row[column.Property] | dynamic: column.Pipe?.Pipe:column.Pipe?.Values || el )}}
   </a>
 </ng-template>
@@ -144,7 +144,7 @@
 <ng-template #checkboxColumn let-column="column" let-row="row" let-el="el">
   <mat-checkbox color="primary" [ngStyle]="column.ContentStyles"
     (click)="$event.stopPropagation()"
-    (change)="$event ? checkboxItemToggle(column, row) : null"
+    (change)="checkboxItemToggle(column, row)"
     [checked]="column.SelectedItems?.isSelected(row)">
     {{ (row[column.Property] | dynamic: column.Pipe?.Pipe:column.Pipe?.Values || el )}}
   </mat-checkbox>
