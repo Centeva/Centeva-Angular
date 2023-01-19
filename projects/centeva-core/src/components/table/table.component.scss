@@ -39,6 +39,11 @@
 }
 
 .table-wrapper {
+
+  ::ng-deep th.mat-header-cell:first-of-type {
+    padding-left: 12px;
+  }
+
   position: relative;
 
   .loading-bar {
@@ -128,10 +133,6 @@
     }
 
     .clickable-row {
-      cursor: pointer;
-    }
-
-    .clickable-column {
       cursor: pointer;
     }
   }

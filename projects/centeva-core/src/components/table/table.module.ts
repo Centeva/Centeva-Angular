@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterModule } from '@angular/router';
 import { CoreDirectivesModule } from '../../core-directives.module';
 import { CorePipesModule } from '../../core-pipes.module';
 import { LoadingModule } from '../loading/loading.module';
@@ -45,6 +46,7 @@ import { TableComponent } from './table.component';
     MatDialogModule,
     MatTooltipModule,
     MatCheckboxModule,
+    RouterModule,
     CoreDirectivesModule
   ],
   exports: [
