@@ -31,7 +31,7 @@ This is an open source project. If you would like to contribute, check out the [
 
 # Installation
 
-`Version 2 of this Package was built with Angular version 13. It is recommend you don't use this library with any application built with Angular < 13.`
+`Version 3 of this Package was built with Angular version 13. It is recommend you don't use this library with any application built with Angular < 13.`
 
 Using npm:
 
