@@ -1,7 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { CheckboxColumn } from 'centeva-core';
 import { cloneDeep, remove } from 'lodash';
 import { DateTime } from 'luxon';
 import { ColumnDataTypes } from '../../common/constants/ColumnDataTypes';
@@ -10,7 +9,7 @@ import { SortStates } from '../../common/constants/SortStates';
 import { IColumnSortState } from '../../common/interfaces/IColumnSortState';
 import { SearchCriteriaRequest } from '../../common/models/SearchCriteriaRequest';
 import { StringFilterCriteria } from '../../common/models/StringFilterCriteria';
-import { ComparisonColumn, DateRangeColumn, TableColumn } from '../../common/models/table-column';
+import { CheckboxColumn, ComparisonColumn, DateRangeColumn, TableColumn } from '../../common/models/table-column';
 
 
 @Component({
