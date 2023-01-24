@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { DateTime } from "luxon";
 import { SelectionModel } from "@angular/cdk/collections";
+import { CheckboxColumn } from "centeva-core";
 
 describe('Table Component tests', () => {
   let component: TableComponent;
@@ -167,7 +168,7 @@ describe('Table Component tests', () => {
   });
 
   it('checkbox master toggle', () => {
-    const column = component.displayedColumns[5];
+    const column = <CheckboxColumn>component.displayedColumns[5];
 
     component.checkboxMasterToggle(column);
     
@@ -177,7 +178,7 @@ describe('Table Component tests', () => {
   });
 
   it('checkbox toggle', () => {
-    const column = component.displayedColumns[5];
+    const column = <CheckboxColumn>component.displayedColumns[5];
 
     component.checkboxItemToggle(column, dataSource.Records[0]);
 
@@ -187,8 +188,8 @@ describe('Table Component tests', () => {
   });
 
   it('multiple checkboxes', () => {
-    const checkboxOneColumn = component.displayedColumns[5];
-    const checkboxTwoColumn = component.displayedColumns[6];
+    const checkboxOneColumn = <CheckboxColumn>component.displayedColumns[5];
+    const checkboxTwoColumn = <CheckboxColumn>component.displayedColumns[6];
 
     component.checkboxItemToggle(checkboxOneColumn, dataSource.Records[0]);
     component.checkboxMasterToggle(checkboxTwoColumn);

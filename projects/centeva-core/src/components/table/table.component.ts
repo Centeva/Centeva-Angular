@@ -1,6 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { CheckboxColumn } from 'centeva-core';
 import { cloneDeep, remove } from 'lodash';
 import { DateTime } from 'luxon';
 import { ColumnDataTypes } from '../../common/constants/ColumnDataTypes';
@@ -108,7 +109,7 @@ export class TableComponent implements OnInit {
 
       if (x.Template) this.templateMapping[x.Property] = x.Template;
       else if (x.Link) this.templateMapping[x.Property] = this.linkRef;
-      else if (x.SelectedItems) this.templateMapping[x.Property] = this.checkboxRef;
+      else if (x.DataType === ColumnDataTypes.CHECKBOX && x.SelectedItems) this.templateMapping[x.Property] = this.checkboxRef;
       else this.templateMapping[x.Property] = this.defaultColumnRef;
     });
 
@@ -305,7 +306,7 @@ export class TableComponent implements OnInit {
     this.searchChanged.emit(this.currentFilter);
   }
 
-  public checkboxMasterToggle(column: TableColumn): void {
+  public checkboxMasterToggle(column: CheckboxColumn): void {
     if (!column.SelectedItems) return;
 
     this.allItemsInSelectionModelSelected(column.SelectedItems)
@@ -314,7 +315,7 @@ export class TableComponent implements OnInit {
     this.checkForCheckboxStatus(column);
   }
 
-  public checkboxItemToggle(column: TableColumn, row: any): void {
+  public checkboxItemToggle(column: CheckboxColumn, row: any): void {
     column.SelectedItems.toggle(row);
     this.checkForCheckboxStatus(column);
   }
@@ -343,7 +344,7 @@ export class TableComponent implements OnInit {
     return anyItemSelected;
   }
 
-  private checkForCheckboxStatus(column: TableColumn): void {
+  private checkForCheckboxStatus(column: CheckboxColumn): void {
     this.checkboxAllSelected[column.Property] = this.allItemsInSelectionModelSelected(column.SelectedItems);
     this.checkboxAtLeastOneSelected[column.Property] = this.anyDisplayedItemInColumnSelected(column.SelectedItems);
   }
