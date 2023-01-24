@@ -20,7 +20,6 @@ type TableColumnBase = {
   Template?: TemplateRef<unknown>;
   IsColumnResizable?: boolean;
   IsColumnSortable?: boolean;
-  SelectedItems?: SelectionModel<any>;
   HideColumnName?: boolean;
 };
 
@@ -52,7 +51,8 @@ export type ComparisonColumn = TableColumnBase & {
 };
 
 export type CheckboxColumn = TableColumnBase & {
-  DataType: ColumnDataTypes.CHECKBOX
+  DataType: ColumnDataTypes.CHECKBOX,
+  SelectedItems: SelectionModel<any>
 };
 
 export type StaticColumn = TableColumnBase & {
