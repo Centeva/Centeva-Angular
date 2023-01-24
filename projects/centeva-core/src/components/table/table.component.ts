@@ -30,6 +30,11 @@ export class TableComponent implements OnInit {
   @Input() set dataSource( value: any) {
     this._dataSource = value;
     this.resetScroll();
+    this.displayedColumns?.forEach(column => {
+      if (column.DataType === ColumnDataTypes.CHECKBOX) {
+        this.checkForCheckboxStatus(column);
+      }
+    });
   }
   get dataSource(): any {
     return this._dataSource;
