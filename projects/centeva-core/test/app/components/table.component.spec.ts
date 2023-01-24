@@ -1,9 +1,8 @@
-import { AdvancedSearchResultsPaged, ColumnDataTypes, DateRangeColumn, Operands, SearchCriteriaRequest, SortStates, StringFilterCriteria, TableColumn, TableComponent } from "projects/centeva-core/src/public-api";
+import { AdvancedSearchResultsPaged, CheckboxColumn, ColumnDataTypes, DateRangeColumn, Operands, SearchCriteriaRequest, SortStates, TableColumn, TableComponent } from "projects/centeva-core/src/public-api";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { DateTime } from "luxon";
 import { SelectionModel } from "@angular/cdk/collections";
-import { CheckboxColumn } from "centeva-core";
 
 describe('Table Component tests', () => {
   let component: TableComponent;
