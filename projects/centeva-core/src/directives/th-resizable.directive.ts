@@ -38,8 +38,8 @@ export class ThResizableDirective implements AfterViewInit {
       if (addResizerToDom) {
         th.appendChild(resizer);
       }
-			th.style.width = `${startingWidth}px`;
-			th.style.minWidth = `${startingWidth}px`;
+      th.style.width = `${startingWidth}px`;
+      th.style.minWidth = `${startingWidth}px`;
     }, 0);
   }
 }
