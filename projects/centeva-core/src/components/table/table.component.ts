@@ -79,6 +79,9 @@ export class TableComponent implements OnInit {
     this.columnNames = this.displayedColumns?.map(x => x.Name);
     const controls: any = {};
     this.displayedColumns?.forEach(x => {
+      if (x.IsColumnResizable == null) x.IsColumnResizable = true;
+      if (x.IsColumnSortable == null) x.IsColumnSortable = true;
+
       const currFilter = this.currentFilter?.FilterCriteria?.find(filter => filter.PropertyName === x.Property);
        // Set property Value
       controls[x.Property] = new FormControl(currFilter?.Value || '');
