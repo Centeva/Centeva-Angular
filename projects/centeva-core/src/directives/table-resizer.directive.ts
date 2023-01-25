@@ -16,7 +16,7 @@ export class TableResizerDirective implements AfterViewInit {
 
   private _startWidth: number;
 
-  private _th: HTMLTableHeaderCellElement;
+  private _th: HTMLTableCellElement;
 
   private _table: HTMLTableElement;
 
@@ -30,6 +30,7 @@ export class TableResizerDirective implements AfterViewInit {
     if (!(this._el.nativeElement instanceof HTMLTableElement)) {
       throw new Error('Table resizer directive used for element which is not table');
     }
+
     this._table = this._el.nativeElement;
     this._table.classList.add('resizable');
     this._table.addEventListener('mousedown', this.onMousedown.bind(this));
@@ -37,7 +38,12 @@ export class TableResizerDirective implements AfterViewInit {
 
   onMousedown(event: any): void {
     if (event.target.tagName === this.span && event.target.classList.contains('resizer')) {
-      this._th = event.target.parentElement;
+      let parent = event.target.parentElement;
+      while (parent?.nodeName !== 'TH') {
+        parent = parent?.parentElement;
+        if (!parent) return;
+      }
+      this._th = parent;
       this._startX = event.pageX;
       this._startWidth = this._th.offsetWidth;
       this._table.classList.add('resizing');
