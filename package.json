@@ -6,7 +6,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test-ci": "ng test --karma-config=karma.ci.conf.js --no-progress",
-    "publish": "npm run build && npm publish dist/centeva-core --access public"
+    "publish": "npm run build && npm publish dist/centeva-core --access public",
+    "update": "ncu -u"
   },
   "private": false,
   "dependencies": {
@@ -44,6 +45,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.7.0",
     "ng-packagr": "^13.3.1",
+    "npm-check-updates": "^16.10.2",
     "typescript": "^4.5.2"
   },
   "description": "Centeva Core is a Common Angular package designed to contain reusable Angular pipes, directives, services, and Components.",
