@@ -31,7 +31,11 @@ jobs:
         uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 18
+      - name: Version
+        run: |
+          cd ./projects/centeva-core
+          npm version ${{ needs.get_semver.outputs.semVer }} --git-tag-version=false
       - name: Build
         run: |
           npm ci
@@ -39,7 +43,6 @@ jobs:
       - name: Publish
         run: |
           npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
-          npm version ${{ needs.get_semver.outputs.semVer }} --git-tag-version=false
           npm publish --ignore-scripts dist/centeva-core --access public
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

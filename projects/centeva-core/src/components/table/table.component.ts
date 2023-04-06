@@ -1,6 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { cloneDeep, remove } from 'lodash';
 import { DateTime } from 'luxon';
 import { ColumnDataTypes } from '../../common/constants/ColumnDataTypes';
@@ -53,7 +53,7 @@ export class TableComponent implements OnInit {
   public lastPage: number;
   public timeout: any = null;
   public timeoutOr: any = null;
-  public formGroup: FormGroup ;
+  public formGroup: UntypedFormGroup ;
   public Operands = Operands;
   public radioFormControl = 'Radio';
   public secondVal = '2';
@@ -70,7 +70,7 @@ export class TableComponent implements OnInit {
   private _dataSource: any;
 
 
-  constructor(public fb: FormBuilder) { }
+  constructor(public fb: UntypedFormBuilder) { }
 
   async ngOnInit() { }
 
@@ -84,22 +84,22 @@ export class TableComponent implements OnInit {
 
       const currFilter = this.currentFilter?.FilterCriteria?.find(filter => filter.PropertyName === x.Property);
        // Set property Value
-      controls[x.Property] = new FormControl(currFilter?.Value || '');
+      controls[x.Property] = new UntypedFormControl(currFilter?.Value || '');
 
       if (x.DataType === ColumnDataTypes.DATEPICKRANGE) {
         // We need to convert the dates from MM/dd/yyy format to a real date in order to be displayed in the input
         const value1 = currFilter ? new Date(currFilter.Value) : null;
         const value2 = currFilter ? new Date(currFilter.Value2) : null;
 
-        controls[x.Property] = new FormControl(value1 || '');
-        controls[x.Property + this.secondVal] = new FormControl(value2 || '');
+        controls[x.Property] = new UntypedFormControl(value1 || '');
+        controls[x.Property + this.secondVal] = new UntypedFormControl(value2 || '');
       }
       if (x.DataType === ColumnDataTypes.COMPARISON) {
         this.setComparisonColumn(x, controls);
       }
       if (x.DataType === ColumnDataTypes.MULTISELECT) {
         const filters = this.currentFilter?.FilterCriteriaOr.filter((filter) => filter.PropertyName === x.Property);
-        controls[x.Property] = new FormControl(filters?.map(f => f.Value) || '');
+        controls[x.Property] = new UntypedFormControl(filters?.map(f => f.Value) || '');
       }
       if (x.DataType === ColumnDataTypes.CHECKBOX && x.SelectedItems) {
         x.SelectedItems.clear();
@@ -122,7 +122,7 @@ export class TableComponent implements OnInit {
 
     this.sortSetup();
     this.resetScroll();
-    this.formGroup = new FormGroup(controls);
+    this.formGroup = new UntypedFormGroup(controls);
   }
 
   private sortSetup() {
@@ -280,15 +280,15 @@ export class TableComponent implements OnInit {
   private setComparisonColumn(column: ComparisonColumn, controls: {[key: string] : AbstractControl}) {
     const currFilter = this.currentFilter?.FilterCriteria?.find(filter => filter.PropertyName === column.Property);
 
-    controls[column.Property] = new FormControl(currFilter ? this.setOperandTypeString(currFilter?.Operand, currFilter?.Value, currFilter?.Value2): '');
-    controls[column.Property + this.radioFormControl] = new FormControl(currFilter?.Operand || '');
-    controls[column.Property+Operands.GreaterThan] = new FormControl(currFilter?.Operand == Operands.GreaterThan ? currFilter?.Value : '');
-    controls[column.Property+Operands.LessThan] = new FormControl(currFilter?.Operand == Operands.LessThan ? currFilter?.Value : '');
-    controls[column.Property+Operands.Between] = new FormControl('');
-    controls[column.Property+Operands.Between + this.secondVal] = new FormControl('');
+    controls[column.Property] = new UntypedFormControl(currFilter ? this.setOperandTypeString(currFilter?.Operand, currFilter?.Value, currFilter?.Value2): '');
+    controls[column.Property + this.radioFormControl] = new UntypedFormControl(currFilter?.Operand || '');
+    controls[column.Property+Operands.GreaterThan] = new UntypedFormControl(currFilter?.Operand == Operands.GreaterThan ? currFilter?.Value : '');
+    controls[column.Property+Operands.LessThan] = new UntypedFormControl(currFilter?.Operand == Operands.LessThan ? currFilter?.Value : '');
+    controls[column.Property+Operands.Between] = new UntypedFormControl('');
+    controls[column.Property+Operands.Between + this.secondVal] = new UntypedFormControl('');
     if (currFilter?.Operand === Operands.Between) {
-      controls[column.Property+Operands.Between] = new FormControl(currFilter?.Value);
-      controls[column.Property+Operands.Between + this.secondVal] = new FormControl(currFilter?.Value2);
+      controls[column.Property+Operands.Between] = new UntypedFormControl(currFilter?.Value);
+      controls[column.Property+Operands.Between + this.secondVal] = new UntypedFormControl(currFilter?.Value2);
     }
   }
 
