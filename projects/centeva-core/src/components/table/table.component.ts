@@ -110,8 +110,8 @@ export class TableComponent implements OnInit {
         if (x.OptionValueProperty == null) x.OptionValueProperty = this.defaultOptionValueProperty;
         x.Options = cloneDeep(x.Options);
         x.Options.map(option => {
-          if (option?.Id != null) {
-            option.Id = option.Id.toString();
+          if (option?.[x.OptionValueProperty] != null) {
+            option[x.OptionValueProperty] = option[x.OptionValueProperty].toString();
           }
         })
       }
