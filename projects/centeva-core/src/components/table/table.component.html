@@ -15,7 +15,7 @@
             <mat-form-field appearance="outline"  class="colum-header" *ngIf="column.DataType == ColumnDataTypes.SELECT">
               <mat-label>{{ column.Name }}</mat-label>
               <mat-select [formControlName]="column.Property" (selectionChange)="filterValueChanged(column)" >
-                <mat-option *ngFor="let option of column.Options" [value]="option.Id">
+                <mat-option *ngFor="let option of column.Options" [value]="option[option.OptionValueProperty]">
                   {{ option.Name }}
                 </mat-option>
               </mat-select>
@@ -26,7 +26,7 @@
             <mat-form-field appearance="outline"  class="colum-header" *ngIf="column.DataType == ColumnDataTypes.MULTISELECT">
               <mat-label>{{ column.Name }}</mat-label>
               <mat-select [formControlName]="column.Property" (selectionChange)="filterOrValueChanged(column)" matTooltip="Select all that apply" multiple>
-                <mat-option *ngFor="let option of column.Options" [value]="option.Id">
+                <mat-option *ngFor="let option of column.Options" [value]="option[option.OptionValueProperty]">
                   {{ option.Name }}
                 </mat-option>
               </mat-select>

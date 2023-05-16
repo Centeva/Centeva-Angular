@@ -61,6 +61,7 @@ export class TableComponent implements OnInit {
   public checkboxAtLeastOneSelected: Record<string, boolean> = {};
   public checkboxAllSelected: Record<string, boolean> = {};
   public templateMapping: Record<string, TemplateRef<any>> = {};
+  public defaultOptionValueProperty = 'Id';
 
   @ViewChild('defaultColumn', { static: true }) defaultColumnRef: TemplateRef<undefined>;
   @ViewChild('linkColumn', { static: true }) linkRef: TemplateRef<undefined>;
@@ -106,6 +107,7 @@ export class TableComponent implements OnInit {
         this.checkForCheckboxStatus(x);
       }
       if (x.DataType === ColumnDataTypes.MULTISELECT || x.DataType === ColumnDataTypes.SELECT) {
+        if (x.OptionValueProperty == null) x.OptionValueProperty = this.defaultOptionValueProperty;
         x.Options = cloneDeep(x.Options);
         x.Options.map(option => {
           if (option?.Id != null) {
