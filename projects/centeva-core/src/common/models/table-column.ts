@@ -38,11 +38,13 @@ export type DateRangeColumn = TableColumnBase & {
 export type SelectColumn = TableColumnBase & {
   DataType: ColumnDataTypes.SELECT,
   Options: any[];
+  OptionValueProperty?: string;
 };
 
 export type MultiSelectColumn = TableColumnBase & {
   DataType: ColumnDataTypes.MULTISELECT,
   Options: any[];
+  OptionValueProperty?: string;
 };
 
 export type ComparisonColumn = TableColumnBase & {
