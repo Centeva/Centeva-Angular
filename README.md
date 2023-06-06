@@ -47,13 +47,6 @@ CentevaCore is an npm package and can be added to a project with npm.
   npm i centeva-core -D
   ```
 
-### Compatibility
-
-| Version | Angular Compatibility |
-| - | - |
-| 4.x | 14.x |
-| 5.x | 15.x, 16.x (Legacy Material Components) |
-
 ## Usage
 
 Once installed you can import modules in your application.
