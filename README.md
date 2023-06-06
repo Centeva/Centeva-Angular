@@ -52,7 +52,7 @@ CentevaCore is an npm package and can be added to a project with npm.
 | Version | Angular Compatibility |
 | - | - |
 | 4.x | 14.x |
-| 5.x | 15.x, 16.x (MDC-based Material Components) |
+| 5.x | 15.x, 16.x (Legacy Material Components) |
 
 ## Usage
 
