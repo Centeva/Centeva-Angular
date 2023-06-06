@@ -68,65 +68,21 @@
 
       .comparison-container {
         position: relative;
-  
-        .comparison {
-          position: absolute;
-          height: 245px;
-          background-color: white;
-          top: 0;
-          left: 0;
-          right: 0;
-          border: 1px solid lightgray;
-          z-index: 99;
-          box-shadow: 0px 0px 4px -2px black;
-          padding: 14px;
-          width: 245px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-    
-          .radio-buttons {
-            display: flex;
-          }
-    
-          .comparison-input {
-            border: 2px solid lightgray;
-            width: 207px;
-            margin-bottom: 10px;
-            margin-top: 7px;
-            padding: 8px 5px;
-            border-radius: 4px;
-            &:hover {
-              border: 2px solid var($dark);
-            }
-          }
-    
-          .negative-margin {
-            margin-top: -5px;
-          }
-    
-          .comparison-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin: 0 30px;
-          }
-        }
+
       }
-      /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
-      ::ng-deep .mat-select-arrow {
+
+      // "Hide" the down arrow on select inputs
+      ::ng-deep .mat-mdc-select-arrow {
         color: white;
       }
-  
+
       .mat-mdc-form-field {
+        // Why?
         width: 219px !important;
         flex-grow: 1;
-  
+
         .clear-icon {
           cursor: pointer;
-        }
-        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-        ::ng-deep .mat-form-field-wrapper {
-          padding-bottom: unset;
         }
       }
     }
@@ -159,14 +115,46 @@
     width: 2px;
     background-color: rgba(0, 0, 0, .42);
   }
-  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-  ::ng-deep .mat-form-field-suffix {
+  // Get multiple suffix icons to line up horizontally
+  ::ng-deep .mat-mdc-form-field-icon-suffix {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.comparison-overlay {
+  width: 265px;
+  background-color: white;
+  border: 1px solid lightgray;
+  box-shadow: 0px 0px 4px -2px black;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .radio-buttons {
     display: flex;
   }
-  /* TODO(mdc-migration): The following rule targets internal classes of radio that may no longer apply for the MDC version. */
-  ::ng-deep .mat-radio-label-content {
-    display: flex !important;
-    flex-direction: column;
-    height: 50px;
+
+  .comparison-input {
+    border: 2px solid lightgray;
+    width: 207px;
+    margin-bottom: 10px;
+    margin-top: 7px;
+    padding: 8px 5px;
+    border-radius: 4px;
+    &:hover {
+      border: 2px solid var($dark);
+    }
+  }
+
+  .negative-margin {
+    margin-top: -5px;
+  }
+
+  .comparison-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 30px;
   }
 }

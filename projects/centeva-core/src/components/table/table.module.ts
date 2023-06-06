@@ -19,6 +19,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule,
     MatCheckboxModule,
     RouterModule,
-    CoreDirectivesModule
+    CoreDirectivesModule,
+    OverlayModule
   ],
   exports: [
     TableComponent
