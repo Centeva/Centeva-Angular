@@ -5,7 +5,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "test-ci": "ng test --karma-config=karma.ci.conf.js --no-progress",
+    "test-ci": "ng test --karma-config=projects/centeva-core/karma.ci.conf.js --no-progress",
     "publish": "npm run build && npm publish dist/centeva-core --access public",
     "update": "ncu -u"
   },
