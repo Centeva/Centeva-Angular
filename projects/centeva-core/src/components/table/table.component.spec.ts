@@ -1,8 +1,14 @@
-import { AdvancedSearchResultsPaged, CheckboxColumn, ColumnDataTypes, DateRangeColumn, Operands, SearchCriteriaRequest, SortStates, TableColumn, TableComponent } from "projects/centeva-core/src/public-api";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { DateTime } from "luxon";
 import { SelectionModel } from "@angular/cdk/collections";
+import { ColumnDataTypes } from "../../common/constants/ColumnDataTypes";
+import { TableComponent } from "./table.component";
+import { CheckboxColumn, DateRangeColumn, TableColumn } from "../../common/models/table-column";
+import { AdvancedSearchResultsPaged } from "../../common/models/AdvancedSearchResultsPaged";
+import { SearchCriteriaRequest } from "../../common/models/SearchCriteriaRequest";
+import { SortStates } from "../../common/constants/SortStates";
+import { Operands } from "../../common/constants/Operands";
 
 describe('Table Component tests', () => {
   let component: TableComponent;
@@ -170,7 +176,7 @@ describe('Table Component tests', () => {
     const column = <CheckboxColumn>component.displayedColumns[5];
 
     component.checkboxMasterToggle(column);
-    
+
     expect(column.SelectedItems.selected.length).toBe(dataSource.Records.length);
     expect(component.checkboxAllSelected[column.Property]).toBe(true);
     expect(component.checkboxAtLeastOneSelected[column.Property]).toBe(true);
@@ -196,7 +202,7 @@ describe('Table Component tests', () => {
     expect(checkboxOneColumn.SelectedItems.selected.length).toBe(1);
     expect(component.checkboxAllSelected[checkboxOneColumn.Property]).toBe(false);
     expect(component.checkboxAtLeastOneSelected[checkboxOneColumn.Property]).toBe(true);
-  
+
     expect(checkboxTwoColumn.SelectedItems.selected.length).toBe(dataSource.Records.length);
     expect(component.checkboxAllSelected[checkboxTwoColumn.Property]).toBe(true);
     expect(component.checkboxAtLeastOneSelected[checkboxTwoColumn.Property]).toBe(true);

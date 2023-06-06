@@ -1,4 +1,4 @@
-import { HighlightPipe } from "../../../src/pipes/highlight.pipe";
+import { HighlightPipe } from "./highlight.pipe";
 
 describe('Highlight Pipe tests', () => {
     const text = 'this is some test text';

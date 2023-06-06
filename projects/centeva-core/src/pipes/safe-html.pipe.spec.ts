@@ -1,6 +1,6 @@
-import { SafeHtmlPipe } from "projects/centeva-core/src/public-api";
 import { DomSanitizer } from '@angular/platform-browser'
-import { inject, TestBed } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
+import { SafeHtmlPipe } from './safe-html.pipe';
 
 describe('Safe Html Pipe tests', () => {
   let sanitizer: DomSanitizer;

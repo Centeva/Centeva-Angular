@@ -1,5 +1,4 @@
-import { CapitalizePipe } from "projects/centeva-core/src/pipes/capitalize.pipe";
-
+import { CapitalizePipe } from "./capitalize.pipe";
 
 describe('Capitalize Pipe Tests', () => {
     it('Should capitalize correctly', () => {

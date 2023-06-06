@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import * as _ from 'lodash';
-import { Utils } from '../../src/common/utils/utils';
+import { Utils } from './utils';
 
 
 describe('Utils Tests', () => {
@@ -70,7 +70,7 @@ describe('Utils Tests', () => {
     });
   });
 
-  
+
   describe('Straight Distance', () => {
     it('Should be able to calculate the distance between coordinates', () => {
         const dist = Utils.straightDistance(42.990967, -71.463767, 0.0, 0.0);

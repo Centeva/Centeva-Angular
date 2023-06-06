@@ -1,4 +1,4 @@
-import { ReversePipe } from "projects/centeva-core/src/public-api";
+import { ReversePipe } from "./reverse.pipe";
 
 describe('Reverse Pipe tests', () => {
 

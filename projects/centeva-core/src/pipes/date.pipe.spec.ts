@@ -1,6 +1,6 @@
-import { DatePipe } from "projects/centeva-core/src/pipes/date.pipe";
 import { DateTime } from "luxon";
 import * as moment from "moment";
+import { DatePipe } from "./date.pipe";
 
 describe('DatePipe', () => {
     const exampleDate = DateTime.local(2000, 1, 1);

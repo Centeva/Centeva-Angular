@@ -1,4 +1,4 @@
-import { PhoneNumberPipe } from "projects/centeva-core/src/public-api";
+import { PhoneNumberPipe } from "./phoneNumber.pipe";
 
 describe('PhoneNumber Pipe tests', () => {
   it('creates an instance', () => {

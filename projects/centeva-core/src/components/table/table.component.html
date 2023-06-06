@@ -5,14 +5,14 @@
         <th mat-header-cell *matHeaderCellDef [ngStyle]="column.ColumnHeaderStyles">
           <div class="column-header-container">
             <!-- INPUT TYPES -->
-            <mat-form-field appearance="outline" class="colum-header" *ngIf="column.DataType == ColumnDataTypes.INPUT">
+            <mat-form-field appearance="outline" class="column-header" *ngIf="column.DataType == ColumnDataTypes.INPUT">
               <mat-label>{{column.Name}}</mat-label>
               <input [formControlName]="column.Property" matInput (input)="filterValueChanged(column)" autocomplete="off"/>
               <mat-icon class="clear-icon" matSuffix *ngIf="formGroup.controls[column.Property]?.value" (click)="clearFilter(column, $event)">close</mat-icon>
             </mat-form-field>
-    
+
             <!-- SELECT TYPES -->
-            <mat-form-field appearance="outline"  class="colum-header" *ngIf="column.DataType == ColumnDataTypes.SELECT">
+            <mat-form-field appearance="outline"  class="column-header" *ngIf="column.DataType == ColumnDataTypes.SELECT">
               <mat-label>{{ column.Name }}</mat-label>
               <mat-select [formControlName]="column.Property" (selectionChange)="filterValueChanged(column)" >
                 <mat-option *ngFor="let option of column.Options" [value]="option[column.OptionValueProperty]">
@@ -21,9 +21,9 @@
               </mat-select>
               <mat-icon class="clear-icon" matSuffix *ngIf="formGroup.controls[column.Property]?.value" (click)="clearFilter(column, $event)">close</mat-icon>
             </mat-form-field>
-    
+
             <!-- MULTISELECT TYPES -->
-            <mat-form-field appearance="outline"  class="colum-header" *ngIf="column.DataType == ColumnDataTypes.MULTISELECT">
+            <mat-form-field appearance="outline"  class="column-header" *ngIf="column.DataType == ColumnDataTypes.MULTISELECT">
               <mat-label>{{ column.Name }}</mat-label>
               <mat-select [formControlName]="column.Property" (selectionChange)="filterOrValueChanged(column)" matTooltip="Select all that apply" multiple>
                 <mat-option *ngFor="let option of column.Options" [value]="option[column.OptionValueProperty]">
@@ -34,7 +34,7 @@
             </mat-form-field>
 
             <!-- DATE TYPES -->
-            <mat-form-field appearance="outline" class="colum-header" *ngIf="column.DataType == ColumnDataTypes.DATEPICKER">
+            <mat-form-field appearance="outline" class="column-header" *ngIf="column.DataType == ColumnDataTypes.DATEPICKER">
               <mat-label>{{column.Name}}</mat-label>
               <input [formControlName]="column.Property" matInput #pickerInput [matDatepicker]="picker" (click)="picker.open()" (dateChange)="filterValueChanged(column)">
               <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
@@ -43,7 +43,7 @@
             </mat-form-field>
 
             <!-- DATE RANGE TYPES -->
-            <mat-form-field appearance="outline" class="colum-header" *ngIf="column.DataType == ColumnDataTypes.DATEPICKRANGE" (click)="picker2.open()">
+            <mat-form-field appearance="outline" class="column-header" *ngIf="column.DataType == ColumnDataTypes.DATEPICKRANGE" (click)="picker2.open()">
               <mat-label>{{column.Name}}</mat-label>
               <mat-date-range-input [rangePicker]="picker2" matTooltip="{{column.Tooltip}}">
                 <input [formControlName]="column.Property" matStartDate #dateRangeStart placeholder="Start date">
@@ -53,38 +53,42 @@
               <mat-date-range-picker #picker2></mat-date-range-picker>
               <mat-icon class="clear-icon" matSuffix *ngIf="dateRangeStart.value || dateRangeEnd.value" (click)="clearFilter(column, $event)">close</mat-icon>
             </mat-form-field>
-    
+
             <!-- COMPARISON TYPES -->
-            <span class="comparison-container" *ngIf="column.DataType == ColumnDataTypes.COMPARISON">
-              <mat-form-field appearance="outline" class="colum-header" >
+            <ng-container *ngIf="column.DataType == ColumnDataTypes.COMPARISON">
+              <mat-form-field appearance="outline" class="column-header" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
                 <mat-label>{{column.Name}}</mat-label>
                 <input [formControlName]="column.Property" #inputType matInput numberInput (input)="filterValueChanged(column)" autocomplete="off"/>
-                <mat-icon class="clear-icon" matSuffix (click)="$event.stopPropagation(); column.ShowComparison = true" >tune</mat-icon>
+                <mat-icon class="clear-icon" matSuffix (click)="column.ShowComparison = true">tune</mat-icon>
                 <mat-icon class="clear-icon" matSuffix *ngIf="formGroup.controls[column.Property]?.value" (click)="clearFilter(column, $event)">close</mat-icon>
               </mat-form-field>
-              <div class="comparison" *ngIf="column.ShowComparison" (clickOutside)="column.ShowComparison ? column.ShowComparison = false : null">
-                <mat-radio-group [formControlName]="column.Property+radioFormControl">
-                  <mat-radio-button  color="primary" [value]="Operands.GreaterThan" >
-                      <input [formControlName]="column.Property+Operands.GreaterThan" numberInput class="comparison-input" placeholder="Greater Than" matInput autocomplete="off"  />
-                  </mat-radio-button>
-                  <mat-radio-button color="primary" [value]="Operands.LessThan">
-                    <input [formControlName]="column.Property+Operands.LessThan" numberInput class="comparison-input" placeholder="Less Than" matInput autocomplete="off"  />
-    
-                  </mat-radio-button>
-                  <mat-radio-button color="primary" [value]="Operands.Between" class="radio-buttons">
-                    <input [formControlName]="column.Property+Operands.Between" numberInput class="comparison-input" placeholder="Range Min" matInput autocomplete="off"  />
-                    <input [formControlName]="column.Property+Operands.Between + secondVal" numberInput class="comparison-input negative-margin" placeholder="Range Max" matInput autocomplete="off"  />
-                  </mat-radio-button>
-                </mat-radio-group>
-                <div class="comparison-buttons">
-                  <button mat-raised-button color="default" (click)="closeComparison(column);">Cancel</button>
-                  <button [disabled]="!formGroup.controls[column.Property+radioFormControl]?.value
-                  || (!formGroup.controls[column.Property+Operands.GreaterThan]?.value
-                  && !formGroup.controls[column.Property+Operands.LessThan]?.value
-                  && (!formGroup.controls[column.Property+Operands.Between]?.value || !formGroup.controls[column.Property+Operands.Between + secondVal]?.value))" mat-raised-button color="primary" (click)="column.ShowComparison = false; filterComparisonChanged(column)">Apply</button>
+              <ng-template cdkConnectedOverlay (overlayOutsideClick)="column.ShowComparison = false" [cdkConnectedOverlayOrigin]="trigger" [cdkConnectedOverlayOpen]="column.ShowComparison">
+                <div class="comparison-overlay">
+                  <mat-radio-group [formControlName]="column.Property+radioFormControl">
+                    <mat-radio-button  color="primary" [value]="Operands.GreaterThan" >
+                        <input [formControlName]="column.Property+Operands.GreaterThan" numberInput class="comparison-input" placeholder="Greater Than" matInput autocomplete="off"  />
+                    </mat-radio-button>
+
+                    <mat-radio-button color="primary" [value]="Operands.LessThan">
+                      <input [formControlName]="column.Property+Operands.LessThan" numberInput class="comparison-input" placeholder="Less Than" matInput autocomplete="off"  />
+                    </mat-radio-button>
+
+                    <mat-radio-button color="primary" [value]="Operands.Between" class="radio-buttons">
+                      <input [formControlName]="column.Property+Operands.Between" numberInput class="comparison-input" placeholder="Range Min" matInput autocomplete="off"  />
+                      <input [formControlName]="column.Property+Operands.Between + secondVal" numberInput class="comparison-input negative-margin" placeholder="Range Max" matInput autocomplete="off"  />
+                    </mat-radio-button>
+                  </mat-radio-group>
+
+                  <div class="comparison-buttons">
+                    <button mat-raised-button color="default" (click)="closeComparison(column);">Cancel</button>
+                    <button [disabled]="!formGroup.controls[column.Property+radioFormControl]?.value
+                    || (!formGroup.controls[column.Property+Operands.GreaterThan]?.value
+                    && !formGroup.controls[column.Property+Operands.LessThan]?.value
+                    && (!formGroup.controls[column.Property+Operands.Between]?.value || !formGroup.controls[column.Property+Operands.Between + secondVal]?.value))" mat-raised-button color="primary" (click)="column.ShowComparison = false; filterComparisonChanged(column)">Apply</button>
+                  </div>
                 </div>
-              </div>
-            </span>
+              </ng-template>
+            </ng-container>
 
             <!-- CHECKBOX TYPES -->
             <ng-container *ngIf="column.DataType === ColumnDataTypes.CHECKBOX">
@@ -100,7 +104,7 @@
             <ng-container *ngIf="column.DataType === ColumnDataTypes.STATIC">
               <span *ngIf="!column.HideColumnName">{{column.Name}}</span>
             </ng-container>
-    
+
             <ng-container *ngIf="column.IsColumnSortable">
               <mat-icon class="sort-icon" *ngIf="!ColumnSortState.SortProperty || ColumnSortState.SortProperty !== column.Property"
               (click)="filterSortChanged($event, column.Property, SortStates.ASC)">arrow_upward</mat-icon>

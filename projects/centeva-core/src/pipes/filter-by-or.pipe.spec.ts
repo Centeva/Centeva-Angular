@@ -1,5 +1,4 @@
-import { FilterByOrPipe } from "projects/centeva-core/src/pipes/filter-by-or.pipe";
-
+import { FilterByOrPipe } from "./filter-by-or.pipe";
 
 describe('Filter By OR Pipe Tests', () => {
   var pipe = new FilterByOrPipe();
@@ -27,5 +26,5 @@ describe('Filter By OR Pipe Tests', () => {
   });
 
 
- 
+
 });

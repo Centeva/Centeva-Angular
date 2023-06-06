@@ -1,4 +1,4 @@
-import { MiddleDotPipe } from "projects/centeva-core/src/public-api";
+import { MiddleDotPipe } from "./middleDot.pipe";
 
 describe('MiddleDot Pipe tests', () => {
     const text = 'test text';

@@ -38,6 +38,7 @@ This is an example of how to list things you need to use the software and how to
 install them.
 
 ### Installation
+
 CentevaCore is an npm package and can be added to a project with npm.
 
 * npm
@@ -45,6 +46,13 @@ CentevaCore is an npm package and can be added to a project with npm.
   ```sh
   npm i centeva-core -D
   ```
+
+### Compatibility
+
+| Version | Angular Compatibility |
+| - | - |
+| 4.x | 14.x |
+| 5.x | 15.x, 16.x (Legacy Material Components) |
 
 ## Usage
 
@@ -66,6 +74,7 @@ export class AppModule{}
 Tests are written in karma/jasmine and can be ran with `npm test`. There is also a ci specific test with the command `npm test:ci`. There is a PR check that will automatically run tests when a Pull Request is created.
 
 ## Versioning
+
 Please deploy an accurate version when publishing your changes, see below.
 
 **MAJOR**.**MINOR**.**PATCH** === **1.1.1**
@@ -77,6 +86,7 @@ Please deploy an accurate version when publishing your changes, see below.
 ## Contributing
 
 ### Setup
+
 1. Clone the repo
 
    ```sh
