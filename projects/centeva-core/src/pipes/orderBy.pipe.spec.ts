@@ -1,4 +1,4 @@
-import { OrderByPipe } from "projects/centeva-core/src/pipes/orderBy.pipe";
+import { OrderByPipe } from "./orderBy.pipe";
 
 describe('OrderBy Pipe tests', () => {
     const greenHat = { name: 'hat', color: 'green', number: 3};

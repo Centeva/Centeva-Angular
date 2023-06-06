@@ -1,4 +1,4 @@
-import { PercentagePipe } from "projects/centeva-core/src/public-api";
+import { PercentagePipe } from "./percentage.pipe";
 
 describe('Percentage Pipe tests', () => {
     it('create an instance', () => {

@@ -1,5 +1,4 @@
-import { FilterByPipe } from "projects/centeva-core/src/pipes/filter-by.pipe";
-
+import { FilterByPipe } from "./filter-by.pipe";
 
 describe('Filter By Pipe Tests', () => {
   var pipe = new FilterByPipe();

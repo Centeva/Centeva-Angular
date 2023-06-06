@@ -1,5 +1,4 @@
-import { CelsiusToFahrenheitPipe } from "projects/centeva-core/src/pipes/celsiusToFahrenheit.pipe";
-
+import { CelsiusToFahrenheitPipe } from "./celsiusToFahrenheit.pipe";
 
 describe('CelsiusToFahrenheit Pipe Tests', () => {
     it('Should convert correctly', () => {
