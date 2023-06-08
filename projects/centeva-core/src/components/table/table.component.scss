@@ -60,6 +60,16 @@
     width: 100%;
     table-layout: fixed;
 
+    // Ensure that floating labels aren't cut off at the top, and remove default left/right padding of MDC table th
+    ::ng-deep .mat-mdc-header-cell {
+      padding: 4px 0 0 0;
+    }
+
+    // Ensure that first table header input has left padding
+    ::ng-deep .mat-mdc-header-cell:first-of-type {
+      padding-left: 16px;
+    }
+
     .column-header-container {
       display: flex;
       flex-direction: row;

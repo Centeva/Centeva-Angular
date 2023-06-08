@@ -5,14 +5,14 @@
         <th mat-header-cell *matHeaderCellDef [ngStyle]="column.ColumnHeaderStyles">
           <div class="column-header-container">
             <!-- INPUT TYPES -->
-            <mat-form-field appearance="outline" class="column-header" *ngIf="column.DataType == ColumnDataTypes.INPUT">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="column-header" *ngIf="column.DataType == ColumnDataTypes.INPUT">
               <mat-label>{{column.Name}}</mat-label>
               <input [formControlName]="column.Property" matInput (input)="filterValueChanged(column)" autocomplete="off"/>
               <mat-icon class="clear-icon" matSuffix *ngIf="formGroup.controls[column.Property]?.value" (click)="clearFilter(column, $event)">close</mat-icon>
             </mat-form-field>
 
             <!-- SELECT TYPES -->
-            <mat-form-field appearance="outline"  class="column-header" *ngIf="column.DataType == ColumnDataTypes.SELECT">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="column-header" *ngIf="column.DataType == ColumnDataTypes.SELECT">
               <mat-label>{{ column.Name }}</mat-label>
               <mat-select [formControlName]="column.Property" (selectionChange)="filterValueChanged(column)" >
                 <mat-option *ngFor="let option of column.Options" [value]="option[column.OptionValueProperty]">
@@ -23,7 +23,7 @@
             </mat-form-field>
 
             <!-- MULTISELECT TYPES -->
-            <mat-form-field appearance="outline"  class="column-header" *ngIf="column.DataType == ColumnDataTypes.MULTISELECT">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="column-header" *ngIf="column.DataType == ColumnDataTypes.MULTISELECT">
               <mat-label>{{ column.Name }}</mat-label>
               <mat-select [formControlName]="column.Property" (selectionChange)="filterOrValueChanged(column)" matTooltip="Select all that apply" multiple>
                 <mat-option *ngFor="let option of column.Options" [value]="option[column.OptionValueProperty]">
@@ -34,7 +34,7 @@
             </mat-form-field>
 
             <!-- DATE TYPES -->
-            <mat-form-field appearance="outline" class="column-header" *ngIf="column.DataType == ColumnDataTypes.DATEPICKER">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="column-header" *ngIf="column.DataType == ColumnDataTypes.DATEPICKER">
               <mat-label>{{column.Name}}</mat-label>
               <input [formControlName]="column.Property" matInput #pickerInput [matDatepicker]="picker" (click)="picker.open()" (dateChange)="filterValueChanged(column)">
               <mat-datepicker-toggle matPrefix [for]="picker"></mat-datepicker-toggle>
@@ -43,7 +43,7 @@
             </mat-form-field>
 
             <!-- DATE RANGE TYPES -->
-            <mat-form-field appearance="outline" class="column-header" *ngIf="column.DataType == ColumnDataTypes.DATEPICKRANGE" (click)="picker2.open()">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="column-header" *ngIf="column.DataType == ColumnDataTypes.DATEPICKRANGE" (click)="picker2.open()">
               <mat-label>{{column.Name}}</mat-label>
               <mat-date-range-input [rangePicker]="picker2" matTooltip="{{column.Tooltip}}">
                 <input [formControlName]="column.Property" matStartDate #dateRangeStart placeholder="Start date">
@@ -56,7 +56,7 @@
 
             <!-- COMPARISON TYPES -->
             <ng-container *ngIf="column.DataType == ColumnDataTypes.COMPARISON">
-              <mat-form-field appearance="outline" class="column-header" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+              <mat-form-field appearance="outline" subscriptSizing="dynamic" class="column-header" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
                 <mat-label>{{column.Name}}</mat-label>
                 <input [formControlName]="column.Property" #inputType matInput numberInput (input)="filterValueChanged(column)" autocomplete="off"/>
                 <mat-icon class="clear-icon" matSuffix (click)="column.ShowComparison = true">tune</mat-icon>
