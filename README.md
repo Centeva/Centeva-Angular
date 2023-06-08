@@ -19,8 +19,9 @@ Centeva Core is a Common Angular library.
 
 ## About The Project
 
-CentevaCore is a collection of Angular pipes, directives, services, and Components designed to help others do common things across multiple of our projects.
-[NPM Package](https://www.npmjs.com/package/centeva-core)
+CentevaCore is a collection of Angular pipes, directives, services, and
+Components designed to help others do common things across multiple of our
+projects. [NPM Package](https://www.npmjs.com/package/centeva-core)
 
 ### Built With
 
@@ -64,7 +65,9 @@ export class AppModule{}
 
 ## Running Tests
 
-Tests are written in karma/jasmine and can be ran with `npm test`. There is also a ci specific test with the command `npm test:ci`. There is a PR check that will automatically run tests when a Pull Request is created.
+Tests are written in karma/jasmine and can be ran with `npm test`. There is also
+a ci specific test with the command `npm run test-ci`. There is a PR check that
+will automatically run tests when a Pull Request is created.
 
 ## Versioning
 
@@ -73,7 +76,8 @@ Please deploy an accurate version when publishing your changes, see below.
 **MAJOR**.**MINOR**.**PATCH** === **1.1.1**
 
 1. **MAJOR** version when you make incompatible API changes.
-2. **MINOR** version when you add functionality in a backwards compatible manner.
+2. **MINOR** version when you add functionality in a backwards compatible
+   manner.
 3. **PATCH** version when you make backwards compatible bug fixes.
 
 ## Contributing
@@ -94,10 +98,17 @@ Please deploy an accurate version when publishing your changes, see below.
 
 ### NPM link
 
-**NPM LINK** is used to test centeva-core package locally without having to package and publish.
+**NPM LINK** is used to test centeva-core package locally without having to
+package and publish.
 
 1. CD to the /dist/centeva-core folder. 
 2. Run `npm link`
-3. Within your test project that you would like to use centeva-core run `npm link centeva-core`.
-4. Anytime you make a change in centeva-core run `npm run build` to rebuild the /dist folder.
-5. You will need to re-run your watch command in your centeva-core consuming application after any changes.
+3. Within your test project that you would like to use centeva-core run `npm
+   link centeva-core`.
+4. Anytime you make a change in centeva-core run `npm run build` to rebuild the
+   /dist folder.
+5. You will need to re-run your watch command in your centeva-core consuming
+   application after any changes.
+6. If you get "NG0203: inject() must be called from an injection context" errors
+   when running your application, add `"preserveSymlinks": true` to
+   `angular.json` in the `architect:build:options` section of your project.
