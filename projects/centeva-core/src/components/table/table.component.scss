@@ -168,3 +168,13 @@
     margin: 0 30px;
   }
 }
+
+// Fix some Material form field bugs with label max width and icon prefix/suffix
+// If Material fixes these can be removed
+::ng-deep .mat-mdc-form-field-has-icon-suffix .mdc-floating-label:not(.mdc-floating-label--float-above) {
+  max-width: calc(158px);
+}
+
+::ng-deep .mat-mdc-form-field-has-icon-prefix .mdc-floating-label:not(.mdc-floating-label--float-above) {
+  max-width: calc(158px);
+}
