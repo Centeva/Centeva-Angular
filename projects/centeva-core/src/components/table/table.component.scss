@@ -90,10 +90,6 @@
         // Why?
         width: 219px !important;
         flex-grow: 1;
-
-        .clear-icon {
-          cursor: pointer;
-        }
       }
     }
 
@@ -129,6 +125,7 @@
   ::ng-deep .mat-mdc-form-field-icon-suffix {
     display: flex;
     flex-direction: row;
+    z-index: 1000; // On top of any overlapping labels
   }
 }
 
@@ -172,9 +169,12 @@
 // Fix some Material form field bugs with label max width and icon prefix/suffix
 // If Material fixes these can be removed
 ::ng-deep .mat-mdc-form-field-has-icon-suffix .mdc-floating-label:not(.mdc-floating-label--float-above) {
-  max-width: calc(158px);
+  padding-right: 48px; // default icon button width
+  box-sizing: border-box;
 }
 
 ::ng-deep .mat-mdc-form-field-has-icon-prefix .mdc-floating-label:not(.mdc-floating-label--float-above) {
-  max-width: calc(158px);
+  // This is the same formula used to offset the label to uncover the prefix icon
+  padding-right: calc(1 * (52px + var(--mat-mdc-form-field-label-offset-x, 0px)));
+  box-sizing: border-box;
 }
