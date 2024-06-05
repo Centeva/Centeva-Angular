@@ -42,6 +42,7 @@ npm i centeva-core --save
 | - | - |
 | 4.x | 14.x |
 | 5.x | 15.x, 16.x (MDC-based Material) |
+| 6.x | 17.x, 18.x |
 
 ## Components
 
