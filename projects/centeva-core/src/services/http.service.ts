@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 const DEFAULT_HTTP_OPTIONS = {
     withCredentials: true,
     headers: new HttpHeaders({
