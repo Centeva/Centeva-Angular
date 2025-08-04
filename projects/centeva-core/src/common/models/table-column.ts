@@ -43,6 +43,7 @@ export type SelectColumn = TableColumnBase & {
 
 export type MultiSelectColumn = TableColumnBase & {
   DataType: ColumnDataTypes.MULTISELECT,
+  OptionTemplate?: TemplateRef<unknown>;
   Options: any[];
   OptionValueProperty?: string;
 };

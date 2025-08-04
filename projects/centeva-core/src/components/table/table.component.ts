@@ -66,6 +66,7 @@ export class TableComponent implements OnInit {
   @ViewChild('defaultColumn', { static: true }) defaultColumnRef: TemplateRef<undefined>;
   @ViewChild('linkColumn', { static: true }) linkRef: TemplateRef<undefined>;
   @ViewChild('checkboxColumn', { static: true }) checkboxRef: TemplateRef<undefined>;
+  @ViewChild('defaultMultiSelectOption', { static: true }) defaultMultiSelectOptionRef: TemplateRef<undefined>;
 
   private _displayedColumns: TableColumn[];
   private _dataSource: any;

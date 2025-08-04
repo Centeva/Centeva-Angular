@@ -31,7 +31,7 @@
               <mat-label>{{ column.Name }}</mat-label>
               <mat-select [formControlName]="column.Property" (selectionChange)="filterOrValueChanged(column)" matTooltip="Select all that apply" multiple>
                 <mat-option *ngFor="let option of column.Options" [value]="option[column.OptionValueProperty]">
-                  {{ option.Name }}
+                  <ng-container [ngTemplateOutlet]="column.OptionTemplate ?? defaultMultiSelectOption" [ngTemplateOutletContext]="{ option: option }"></ng-container>
                 </mat-option>
               </mat-select>
               <button mat-icon-button matSuffix *ngIf="formGroup.controls[column.Property]?.value?.length > 0" (click)="clearFilter(column, $event)" [attr.aria-label]="'Clear'">
@@ -171,4 +171,8 @@
     [checked]="column.SelectedItems?.isSelected(row)">
     {{ (row[column.Property] | dynamic: column.Pipe?.Pipe:column.Pipe?.Values || el )}}
   </mat-checkbox>
+</ng-template>
+
+<ng-template #defaultMultiSelectOption let-option="option">
+  {{option.Name}}
 </ng-template>
