@@ -1,5 +1,4 @@
 import { DateTime } from "luxon";
-import * as moment from "moment";
 import { DatePipe } from "./date.pipe";
 
 describe('DatePipe', () => {
@@ -37,9 +36,6 @@ describe('DatePipe', () => {
 
     it('should be able to format js date', () => {
       expect(pipe.transform(new Date('2020-01-01 MST'), 'MM-dd-yyyy')).toBe('01-01-2020');
-    });
-    it ('should be able to handle moment date', () => {
-      expect(pipe.transform(moment('2020-01-01 MST'), 'MM-dd-yyyy')).toBe('01-01-2020');
     });
     it ('should be able to string date format', () => {
       expect(pipe.transform('2020-01-01 MST', 'MM-dd-yyyy')).toBe('01-01-2020');
