@@ -1,7 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import * as _ from 'lodash';
 
-@Pipe({ name: 'phoneNumber' })
+@Pipe({
+    name: 'phoneNumber',
+    standalone: false
+})
 export class PhoneNumberPipe implements PipeTransform  {
   public transform(value: string, args?: any) {
     const cleaned = ('' + value).replace(/\D/g, '');

@@ -3,7 +3,10 @@ import {Pipe, PipeTransform} from '@angular/core';
 import {DateTime} from 'luxon';
 import * as moment from 'moment';
 
-@Pipe({name: 'Date'})
+@Pipe({
+    name: 'Date',
+    standalone: false
+})
 export class DatePipe implements PipeTransform {
     transform(value: moment.Moment | string | Date | DateTime, ...args: string[]): unknown {
       if (!value) {

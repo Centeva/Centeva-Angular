@@ -9,7 +9,8 @@ import { MIN_CELL_WIDTH } from './th-resizable.directive';
 
 
 @Directive({
-  selector: '[tableResizer]'
+    selector: '[tableResizer]',
+    standalone: false
 })
 export class TableResizerDirective implements AfterViewInit {
   private _startX: number;

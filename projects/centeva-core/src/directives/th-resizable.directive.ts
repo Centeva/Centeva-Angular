@@ -2,7 +2,8 @@ import { AfterViewInit, Directive, ElementRef } from '@angular/core';
 export const HANDLER_WIDTH = 27;
 export const MIN_CELL_WIDTH = 272;
 @Directive({
-  selector: '[thResizable]'
+    selector: '[thResizable]',
+    standalone: false
 })
 export class ThResizableDirective implements AfterViewInit {
 

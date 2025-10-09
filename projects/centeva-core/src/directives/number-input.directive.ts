@@ -3,7 +3,8 @@ import { KeyboardKeys } from '../common/constants/KeyboardKeys';
 
 
 @Directive({
-  selector: '[numberInput]'
+    selector: '[numberInput]',
+    standalone: false
 })
 export class NumberInputDirective {
 

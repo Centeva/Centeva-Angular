@@ -1,7 +1,8 @@
 import { Directive, ElementRef, EventEmitter, Input, Output, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[appInfiniteScrollOnBottom]'
+    selector: '[appInfiniteScrollOnBottom]',
+    standalone: false
 })
 export class InfiniteScrollDirective {
   @Input() infiniteScrollDistance : number = 25; // percentage until it loads another page
