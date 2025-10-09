@@ -1,4 +1,4 @@
-@import '../../colors.scss';
+@use '../../colors.scss';
 
 .bold {
   font-weight: 700;
@@ -151,7 +151,7 @@
     padding: 8px 5px;
     border-radius: 4px;
     &:hover {
-      border: 2px solid var($dark);
+      border: 2px solid var(colors.$dark);
     }
   }
 

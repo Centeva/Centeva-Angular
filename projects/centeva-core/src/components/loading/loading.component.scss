@@ -1,4 +1,4 @@
-@import "../../colors";
+@use "../../colors";
 
 .loading-container {
   display: flex;
@@ -10,7 +10,7 @@
     font-style: italic;
     margin-bottom: 20px;
     font-size: 1.333rem;
-    color: $dark-gray;
+    color: colors.$dark-gray;
   }
 
 }
