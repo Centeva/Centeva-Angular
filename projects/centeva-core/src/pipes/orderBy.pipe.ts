@@ -3,7 +3,10 @@ import { orderBy } from 'lodash';
 
 export enum SortOrder { Ascending = "asc", Descending = "desc" };
 
-@Pipe({ name: 'orderBy' })
+@Pipe({
+    name: 'orderBy',
+    standalone: false
+})
 export class OrderByPipe implements PipeTransform {
     transform(collection: any[], iteratees: string | string[], orders?: SortOrder | SortOrder[]) {
         if (!collection) return collection;

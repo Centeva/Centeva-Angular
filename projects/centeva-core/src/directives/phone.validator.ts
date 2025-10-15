@@ -4,11 +4,12 @@ import {Directive} from '@angular/core';
 import {Utils} from '../common/utils/utils';
 
 @Directive({
-  // tslint:disable-next-line:directive-selector
-  selector: '[validPhone][ngModel]',
-  providers: [
-    { provide: NG_VALIDATORS, useExisting: PhoneValidator, multi: true },
-  ],
+    // tslint:disable-next-line:directive-selector
+    selector: '[validPhone][ngModel]',
+    providers: [
+        { provide: NG_VALIDATORS, useExisting: PhoneValidator, multi: true },
+    ],
+    standalone: false
 })
 export class PhoneValidator implements Validator {
   public static Validate(c: AbstractControl) {

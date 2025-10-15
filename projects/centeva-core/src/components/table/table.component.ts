@@ -13,9 +13,10 @@ import { CheckboxColumn, ComparisonColumn, DateRangeColumn, TableColumn } from '
 
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+    selector: 'app-table',
+    templateUrl: './table.component.html',
+    styleUrls: ['./table.component.scss'],
+    standalone: false
 })
 export class TableComponent implements OnInit {
 

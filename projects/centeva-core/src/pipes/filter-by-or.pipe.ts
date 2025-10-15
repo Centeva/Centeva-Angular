@@ -5,7 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
   Will preform and OR search. Meaning any condition will work.
 */
 @Pipe({
-  name: 'filterByOr'
+    name: 'filterByOr',
+    standalone: false
 })
 export class FilterByOrPipe implements PipeTransform {
 

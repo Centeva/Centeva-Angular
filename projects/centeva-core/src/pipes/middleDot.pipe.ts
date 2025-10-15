@@ -1,6 +1,9 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
-@Pipe({name: 'middleDot'})
+@Pipe({
+    name: 'middleDot',
+    standalone: false
+})
 export class MiddleDotPipe implements PipeTransform {
   public transform(value: any, n: number): any {
     let str = value;

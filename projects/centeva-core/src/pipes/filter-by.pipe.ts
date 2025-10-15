@@ -5,7 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
   Will preform and AND search. Meaning all conditions must be met.
 */
 @Pipe({
-  name: 'filterBy'
+    name: 'filterBy',
+    standalone: false
 })
 export class FilterByPipe implements PipeTransform {
 
