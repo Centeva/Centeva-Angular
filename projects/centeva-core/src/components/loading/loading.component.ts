@@ -10,6 +10,7 @@ export class LoadingComponent implements OnInit {
 
   @Input() public loadingText = '';
   @Input() public loaderColor = 'primary';
+  @Input() public ariaLabel: string = 'Loading data, please wait';
 
   constructor() {
   }
