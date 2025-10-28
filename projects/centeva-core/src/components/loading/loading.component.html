@@ -1,4 +1,4 @@
 <div class="loading-container">
     <div class="loading-text" *ngIf="loadingText">{{loadingText}}</div>
-    <mat-progress-spinner [color]="loaderColor" mode="indeterminate"></mat-progress-spinner>
+    <mat-progress-spinner [attr.aria-label]="ariaLabel" [color]="loaderColor" mode="indeterminate"></mat-progress-spinner>
 </div>
