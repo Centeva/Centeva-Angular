@@ -38,11 +38,12 @@ npm i centeva-core --save
 
 ### Compatibility
 
-| Version | Angular Compatibility |
-| - | - |
-| 4.x | 14.x |
+| Version | Angular Compatibility           |
+| - |---------------------------------|
+| 4.x | 14.x                            |
 | 5.x | 15.x, 16.x (MDC-based Material) |
-| 6.x | 17.x, 18.x |
+| 6.x | 17.x, 18.x                      |
+| 7.x | 21.x, 22.x                      |
 
 ## Components
 
