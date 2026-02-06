@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { orderBy } from 'lodash';
+import { orderBy } from 'lodash-es';
 
 export enum SortOrder { Ascending = "asc", Descending = "desc" };
 

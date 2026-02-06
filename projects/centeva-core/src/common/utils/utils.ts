@@ -1,6 +1,7 @@
-import * as _ from 'lodash';
 
 // @dynamic
+import { forEach, map, replace, sortBy, toNumber } from 'lodash-es';
+
 export class Utils {
 
   public static UnitedStates = [
@@ -112,7 +113,7 @@ export class Utils {
 
   public static GetStateAndAbbreviationList(): any[] {
     const stateList = [];
-    _.forEach(this.States, (s) => {
+    forEach(this.States, (s) => {
       stateList.push({state: s[0], abbreviation: s[1]});
     });
     return stateList;
@@ -182,7 +183,7 @@ export class Utils {
   }
 
   public static SortByKey(items: any, key: string): any[] {
-    return _.sortBy(items, this.SmartSortFunctions(key));
+    return sortBy(items, this.SmartSortFunctions(key));
   }
 
   public static SmartSortFunctions(key: any) {
@@ -192,7 +193,7 @@ export class Utils {
         if (!test || !test[0]) {
           return i[key];
         } else {
-          return _.replace(i[key], test[0], '');
+          return replace(i[key], test[0], '');
         }
       },
       (i: any) => {
@@ -200,7 +201,7 @@ export class Utils {
         if (!test || !test[0]) {
           return;
         } else {
-          return _.toNumber(test[0]);
+          return toNumber(test[0]);
         }
       },
     ];
@@ -210,8 +211,8 @@ export class Utils {
     delimiter = delimiter ? delimiter : ',';
     let csvString = '';
 
-    _.forEach(rows, (row, index) => {
-      row = _.map(row, (v) => {
+    forEach(rows, (row, index) => {
+      row = map(row, (v) => {
         if (v && typeof v === 'string' && (v.indexOf(',') > -1 || v.indexOf('\ ') > -1)) {
           return `"${v}"`;
         } else {
