@@ -1,6 +1,6 @@
 import * as assert from 'assert';
-import * as _ from 'lodash';
 import { Utils } from './utils';
+import { forEach } from 'lodash-es';
 
 
 describe('Utils Tests', () => {
@@ -86,7 +86,7 @@ describe('Utils Tests', () => {
   describe('States', () => {
     it('Should provide a list of states with their abbreviations', () => {
       const statesAndAbbreviationList = Utils.GetStateAndAbbreviationList();
-      _.forEach(statesAndAbbreviationList, (s) => {
+      forEach(statesAndAbbreviationList, (s) => {
           expect(s.state).toBeDefined();
           expect(s.abbreviation).toBeDefined();
       });

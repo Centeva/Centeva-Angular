@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import * as _ from 'lodash';
+import { lowerCase, startCase } from 'lodash-es';
 
 @Pipe({
     name: 'capitalize',
@@ -7,6 +7,6 @@ import * as _ from 'lodash';
 })
 export class CapitalizePipe implements PipeTransform {
   public transform(value: string, args?: any) {
-    return _.startCase(_.lowerCase(value));
+    return startCase(lowerCase(value));
   }
 }

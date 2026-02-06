@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import * as _ from 'lodash';
+import { round } from 'lodash-es';
 
 @Pipe({
     name: 'celsiusToFahrenheit',
@@ -7,6 +7,6 @@ import * as _ from 'lodash';
 })
 export class CelsiusToFahrenheitPipe implements PipeTransform  {
   public transform(value: number, args?: any) {
-    return _.round(value * 1.8 + 32, 1);
+    return round(value * 1.8 + 32, 1);
   }
 }

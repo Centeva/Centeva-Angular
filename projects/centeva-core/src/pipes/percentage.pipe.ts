@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import * as _ from 'lodash';
+import { round } from 'lodash-es';
 
 @Pipe({
     name: 'percentage',
@@ -7,6 +7,6 @@ import * as _ from 'lodash';
 })
 export class PercentagePipe implements PipeTransform  {
   public transform(value: number, args?: any) {
-    return _.round(value * 100, 0);
+    return round(value * 100, 0);
   }
 }

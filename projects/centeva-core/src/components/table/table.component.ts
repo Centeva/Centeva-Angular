@@ -1,7 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { cloneDeep, remove } from 'lodash';
 import { DateTime } from 'luxon';
 import { ColumnDataTypes } from '../../common/constants/ColumnDataTypes';
 import { Operands } from '../../common/constants/Operands';
@@ -10,6 +9,7 @@ import { IColumnSortState } from '../../common/interfaces/IColumnSortState';
 import { SearchCriteriaRequest } from '../../common/models/SearchCriteriaRequest';
 import { StringFilterCriteria } from '../../common/models/StringFilterCriteria';
 import { CheckboxColumn, ComparisonColumn, DateRangeColumn, TableColumn } from '../../common/models/table-column';
+import { cloneDeep, remove } from 'lodash-es';
 
 
 @Component({
