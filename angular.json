@@ -25,11 +25,11 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "main": "projects/centeva-core/src/test.ts",
             "tsConfig": "projects/centeva-core/tsconfig.spec.json",
-            "karmaConfig": "projects/centeva-core/karma.conf.js"
+            "runner": "vitest",
+            "setupFiles": ["projects/centeva-core/src/test-setup.ts"]
           }
         }
       }
@@ -60,5 +60,8 @@
     "@schematics/angular:resolver": {
       "typeSeparator": "."
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

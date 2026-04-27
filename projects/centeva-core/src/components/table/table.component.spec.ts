@@ -1,9 +1,14 @@
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { vi } from 'vitest';
+import { FormsModule, ReactiveFormsModule, UntypedFormBuilder } from "@angular/forms";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { provideRouter } from "@angular/router";
+
+
 import { DateTime } from "luxon";
 import { SelectionModel } from "@angular/cdk/collections";
 import { ColumnDataTypes } from "../../common/constants/ColumnDataTypes";
 import { TableComponent } from "./table.component";
+import { TableModule } from "./table.module";
 import { CheckboxColumn, DateRangeColumn, TableColumn } from "../../common/models/table-column";
 import { AdvancedSearchResultsPaged } from "../../common/models/AdvancedSearchResultsPaged";
 import { SearchCriteriaRequest } from "../../common/models/SearchCriteriaRequest";
@@ -19,12 +24,10 @@ describe('Table Component tests', () => {
 
   beforeEach( async () => {
     await TestBed.configureTestingModule({
-      declarations: [TableComponent],
-      imports: [ FormsModule, ReactiveFormsModule ]
-    }).compileComponents()
-  });
+      imports: [ TableModule, ReactiveFormsModule ],
+      providers: [ provideRouter([]), { provide: UntypedFormBuilder, useClass: UntypedFormBuilder } ]
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(TableComponent);
     component = fixture.componentInstance;
 
@@ -80,12 +83,11 @@ describe('Table Component tests', () => {
       SortProperty: ''
     }
 
-    spyOn(component, 'emitSearchChanged').and.callThrough();
-    spyOn(component, 'removeTimesFromDate').and.callThrough();
-    spyOn(component, 'filterValueChanged').and.callThrough();
+    vi.spyOn(component, 'emitSearchChanged');
+    vi.spyOn(component, 'removeTimesFromDate');
+    vi.spyOn(component, 'filterValueChanged');
 
-    jasmine.clock().uninstall();
-    jasmine.clock().install();
+    vi.useFakeTimers();
 
     component.dataSource = dataSource;
     component.currentFilter = searchCriteriaRequest;
@@ -128,7 +130,7 @@ describe('Table Component tests', () => {
 
     component.formGroup.controls[column.Property].setValue('value 2');
     component.filterValueChanged(column);
-    jasmine.clock().tick(1000);
+    vi.advanceTimersByTime(1000);
 
     expect(component.formGroup.controls[column.Property].value).toBe('value 2');
     expect(component.currentFilter.FilterCriteria[0].Value).toBe('value 2');
@@ -140,7 +142,7 @@ describe('Table Component tests', () => {
     component.formGroup.controls[column.Property].setValue(['ACTIVE']);
 
     component.filterOrValueChanged(column);
-    jasmine.clock().tick(2000);
+    vi.advanceTimersByTime(2000);
 
     expect(component.formGroup.controls[column.Property].value).toEqual(['ACTIVE']);
     expect(component.currentFilter.FilterCriteriaOr[0].Value).toEqual('ACTIVE');
@@ -209,6 +211,6 @@ describe('Table Component tests', () => {
   });
 
   afterEach( () => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 });
