@@ -7,9 +7,6 @@
       "centeva-core": [
         "dist/centeva-core/centeva-core",
         "dist/centeva-core"
-      ],
-      "@angular/*": [
-        "./node_modules/@angular/*"
       ]
     },
     "outDir": "./dist/out-tsc",
