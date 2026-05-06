@@ -5,6 +5,9 @@
         <ng-container>
           <th mat-header-cell *matHeaderCellDef [ngStyle]="column.ColumnHeaderStyles">
             <div class="column-header-container">
+              @if (column.HeaderTemplate) {
+                <ng-container [ngTemplateOutlet]="column.HeaderTemplate"></ng-container>
+              } @else {
               <!-- INPUT TYPES -->
               @if (column.DataType == ColumnDataTypes.INPUT) {
                 <mat-form-field appearance="outline" subscriptSizing="dynamic" class="column-header">
@@ -156,6 +159,7 @@
               @if (column.IsColumnResizable) {
                 <span class="resizer" thResizable></span>
               }
+              } <!-- end @else HeaderTemplate -->
             </div>
           </th>
         </ng-container>
