@@ -142,6 +142,7 @@
                   <span>{{column.Name}}</span>
                 }
               }
+              } <!-- end @else HeaderTemplate -->
               @if (column.IsColumnSortable) {
                 @if (!ColumnSortState.SortProperty || ColumnSortState.SortProperty !== column.Property) {
                   <mat-icon class="sort-icon"
@@ -159,7 +160,6 @@
               @if (column.IsColumnResizable) {
                 <span class="resizer" thResizable></span>
               }
-              } <!-- end @else HeaderTemplate -->
             </div>
           </th>
         </ng-container>
