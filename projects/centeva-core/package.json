@@ -1,6 +1,6 @@
 {
   "name": "centeva-core",
-  "version": "0.0.0",
+  "version": "7.1.0",
   "peerDependencies": {
     "@angular/common": "^21.0.0 || ^22.0.0",
     "@angular/core": "^21.0.0 || ^22.0.0",

@@ -113,6 +113,77 @@ let displayedColumns: TableColumn[];
 (searchChanged)="searchChanged($event)" (rowSelected)="rowSelected($event)"></app-table>
 ```
 
+#### TableColumn Properties
+
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| `Name` | `string` | Column header label |
+| `Property` | `string` | Key of the data object to display |
+| `DataType` | `ColumnDataTypes` | Controls the header filter widget (INPUT, SELECT, MULTISELECT, DATEPICKER, DATEPICKRANGE, COMPARISON, CHECKBOX, STATIC) |
+| `Enabled` | `boolean` | Whether the column is shown |
+| `Template` | `TemplateRef<unknown>` | Custom template for the cell body |
+| `HeaderTemplate` | `TemplateRef<unknown>` | Custom template that replaces the entire column header. When set, the built-in filter widget is not rendered. See [HeaderTemplate](#headertemplate) below. |
+| `IsColumnSortable` | `boolean` | Adds sort icons to the header |
+| `IsColumnResizable` | `boolean` | Adds a drag handle to resize the column |
+| `HideColumnName` | `boolean` | Hides the column name label (CHECKBOX / STATIC types) |
+| `ColumnHeaderStyles` | `Record<string, string>` | Inline styles applied to the `<th>` element |
+| `ContentStyles` | `Record<string, string>` | Inline styles applied to the cell content |
+| `Pipe` | `{ Pipe: PipeTransform, Values?: any }` | Pipe applied to the cell value |
+| `Link` | `(row: any) => string` | Converts the cell into a router link |
+| `Tooltip` | `string` | Tooltip text (used with date range columns) |
+| `HoverDetails` | `(col, row) => {}` | Returns a string shown as a cell title on hover |
+
+#### HeaderTemplate
+
+`HeaderTemplate` is an escape hatch that lets you replace the entire contents of a column header with any Angular template — useful when the built-in filter widgets (INPUT, MULTISELECT, etc.) are not flexible enough.
+
+```typescript
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ColumnDataTypes, TableColumn } from 'centeva-core';
+
+@Component({ ... })
+export class MyComponent implements OnInit, AfterViewInit {
+  @ViewChild('facilityHeaderTpl') facilityHeaderTpl!: TemplateRef<unknown>;
+
+  columns: TableColumn[] = [];
+
+  ngOnInit() {
+    // Build the full columns array as normal — HeaderTemplate is patched in after the view initialises.
+    this.columns = [
+      {
+        DataType: ColumnDataTypes.STATIC,
+        Name: 'Facility',
+        Property: 'facilityName',
+        Enabled: true,
+      },
+      // ...other columns
+    ];
+  }
+
+  ngAfterViewInit() {
+    // Patch only the template reference — avoids rebuilding the array and prevents an extra CD cycle.
+    this.columns.find(c => c.Property === 'facilityName')!.HeaderTemplate = this.facilityHeaderTpl;
+  }
+}
+```
+
+```html
+<!-- Define the template anywhere in the component's template -->
+<!-- The column definition is passed as $implicit context — use let-col to access it (optional) -->
+<ng-template #facilityHeaderTpl let-col>
+  <span>{{ col.Name }}</span>
+  <app-searchable-multi-select
+    [options]="facilityOptions"
+    [(selectedValues)]="selectedFacilities"
+    (selectionChange)="onFacilityFilter($event)">
+  </app-searchable-multi-select>
+</ng-template>
+
+<app-table [displayedColumns]="columns" ...></app-table>
+```
+
+> **Note:** Build your `columns` array in `ngOnInit` as usual and patch only `HeaderTemplate` in `ngAfterViewInit`. This avoids rebuilding the whole array in the after-view hook, which can cause an extra change-detection cycle and flicker — especially with `OnPush` components.
+
 #### Table Preview
 
 <img src="https://github.com/Centeva/Centeva-Angular/blob/master/projects/centeva-core/src/assets/table-example.png" alt="Table Preview" width="500"/>

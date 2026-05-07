@@ -18,6 +18,7 @@ type TableColumnBase = {
   ColumnHeaderStyles?: Record<string, string>;
   ContentStyles?: Record<string, string>;
   Template?: TemplateRef<unknown>;
+  HeaderTemplate?: TemplateRef<unknown>;
   IsColumnResizable?: boolean;
   IsColumnSortable?: boolean;
   HideColumnName?: boolean;

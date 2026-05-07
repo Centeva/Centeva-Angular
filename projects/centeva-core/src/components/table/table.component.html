@@ -5,6 +5,9 @@
         <ng-container>
           <th mat-header-cell *matHeaderCellDef [ngStyle]="column.ColumnHeaderStyles">
             <div class="column-header-container">
+              @if (column.HeaderTemplate) {
+                <ng-container [ngTemplateOutlet]="column.HeaderTemplate" [ngTemplateOutletContext]="{ $implicit: column }"></ng-container>
+              } @else {
               <!-- INPUT TYPES -->
               @if (column.DataType == ColumnDataTypes.INPUT) {
                 <mat-form-field appearance="outline" subscriptSizing="dynamic" class="column-header">
@@ -139,6 +142,7 @@
                   <span>{{column.Name}}</span>
                 }
               }
+              } <!-- end @else HeaderTemplate -->
               @if (column.IsColumnSortable) {
                 @if (!ColumnSortState.SortProperty || ColumnSortState.SortProperty !== column.Property) {
                   <mat-icon class="sort-icon"
