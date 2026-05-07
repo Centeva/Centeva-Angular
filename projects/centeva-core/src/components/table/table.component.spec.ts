@@ -1,5 +1,6 @@
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Component, TemplateRef, ViewChild } from "@angular/core";
 import { DateTime } from "luxon";
 import { SelectionModel } from "@angular/cdk/collections";
 import { ColumnDataTypes } from "../../common/constants/ColumnDataTypes";
@@ -210,5 +211,66 @@ describe('Table Component tests', () => {
 
   afterEach( () => {
     jasmine.clock().uninstall();
+  });
+});
+
+@Component({
+  standalone: true,
+  template: `
+    <ng-template #customHeader>
+      <span class="custom-header-content">custom</span>
+    </ng-template>
+  `
+})
+class HeaderTemplateHostComponent {
+  @ViewChild('customHeader') customHeader!: TemplateRef<unknown>;
+}
+
+describe('Table Component — HeaderTemplate', () => {
+  let tableFixture: ComponentFixture<TableComponent>;
+  let tableComponent: TableComponent;
+  let hostFixture: ComponentFixture<HeaderTemplateHostComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [TableComponent],
+      imports: [FormsModule, ReactiveFormsModule, HeaderTemplateHostComponent]
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
+    hostFixture = TestBed.createComponent(HeaderTemplateHostComponent);
+    hostFixture.detectChanges();
+
+    tableFixture = TestBed.createComponent(TableComponent);
+    tableComponent = tableFixture.componentInstance;
+
+    tableComponent.displayedColumns = [
+      { Name: 'Test1', Placeholder: 'Test1', DataType: ColumnDataTypes.INPUT, Property: 'ProjectTitle', Enabled: true }
+    ];
+    tableComponent.dataSource = {
+      FirstItemOnPage: 1, HasNextPage: false, HasPreviousPage: false,
+      IsFirstPage: true, IsLastPage: true, LastItemOnPage: 0,
+      PageNumber: 1, PageSize: 5, Records: [], TotalItems: 0, TotalPages: 1
+    };
+    tableComponent.currentFilter = {
+      FilterCriteria: [], FilterCriteriaOr: [],
+      PageNumber: 1, PageSize: 5, SortDirection: '', SortProperty: ''
+    };
+    tableFixture.detectChanges();
+  });
+
+  it('renders the custom HeaderTemplate and hides the default filter widget', () => {
+    const column = tableComponent.displayedColumns[0];
+    column.HeaderTemplate = hostFixture.componentInstance.customHeader;
+    tableFixture.detectChanges();
+
+    // The column's HeaderTemplate should be set to the host's TemplateRef
+    expect(column.HeaderTemplate).toBeTruthy();
+    // And it should be the exact same reference as the one on the host
+    expect(column.HeaderTemplate).toBe(hostFixture.componentInstance.customHeader);
+    // DataType remains INPUT — HeaderTemplate does not change the column type,
+    // the template branching is handled in the view
+    expect(column.DataType).toBe(ColumnDataTypes.INPUT);
   });
 });

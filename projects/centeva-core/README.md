@@ -138,32 +138,40 @@ let displayedColumns: TableColumn[];
 `HeaderTemplate` is an escape hatch that lets you replace the entire contents of a column header with any Angular template — useful when the built-in filter widgets (INPUT, MULTISELECT, etc.) are not flexible enough.
 
 ```typescript
-import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ColumnDataTypes, TableColumn } from 'centeva-core';
 
 @Component({ ... })
-export class MyComponent implements AfterViewInit {
+export class MyComponent implements OnInit, AfterViewInit {
   @ViewChild('facilityHeaderTpl') facilityHeaderTpl!: TemplateRef<unknown>;
 
   columns: TableColumn[] = [];
 
-  ngAfterViewInit() {
+  ngOnInit() {
+    // Build the full columns array as normal — HeaderTemplate is patched in after the view initialises.
     this.columns = [
       {
         DataType: ColumnDataTypes.STATIC,
         Name: 'Facility',
         Property: 'facilityName',
         Enabled: true,
-        HeaderTemplate: this.facilityHeaderTpl,
       },
+      // ...other columns
     ];
+  }
+
+  ngAfterViewInit() {
+    // Patch only the template reference — avoids rebuilding the array and prevents an extra CD cycle.
+    this.columns.find(c => c.Property === 'facilityName')!.HeaderTemplate = this.facilityHeaderTpl;
   }
 }
 ```
 
 ```html
 <!-- Define the template anywhere in the component's template -->
-<ng-template #facilityHeaderTpl>
+<!-- The column definition is passed as $implicit context — use let-col to access it (optional) -->
+<ng-template #facilityHeaderTpl let-col>
+  <span>{{ col.Name }}</span>
   <app-searchable-multi-select
     [options]="facilityOptions"
     [(selectedValues)]="selectedFacilities"
@@ -174,7 +182,7 @@ export class MyComponent implements AfterViewInit {
 <app-table [displayedColumns]="columns" ...></app-table>
 ```
 
-> **Note:** Assign `HeaderTemplate` in `ngAfterViewInit`, not `ngOnInit`, because `@ViewChild` templates are not resolved until after the view initialises.
+> **Note:** Build your `columns` array in `ngOnInit` as usual and patch only `HeaderTemplate` in `ngAfterViewInit`. This avoids rebuilding the whole array in the after-view hook, which can cause an extra change-detection cycle and flicker — especially with `OnPush` components.
 
 #### Table Preview
 
