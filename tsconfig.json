@@ -2,11 +2,10 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "paths": {
       "centeva-core": [
-        "dist/centeva-core/centeva-core",
-        "dist/centeva-core"
+        "./dist/centeva-core/centeva-core",
+        "./dist/centeva-core"
       ],
       "@angular/*": [
         "./node_modules/@angular/*"

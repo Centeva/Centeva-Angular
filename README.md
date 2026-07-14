@@ -65,8 +65,8 @@ export class AppModule{}
 
 ## Running Tests
 
-Tests are written in karma/jasmine and can be ran with `npm test`. There is also
-a ci specific test with the command `npm run test-ci`. There is a PR check that
+Tests are written with Vitest and can be run with `npm test`. There is also
+a CI-specific test command, `npm run test-ci`. There is a PR check that
 will automatically run tests when a Pull Request is created.
 
 ## Versioning

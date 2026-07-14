@@ -11,7 +11,14 @@ export class DatePipe implements PipeTransform {
       if (!value) {
         return value;
       }
-      const jsDate = DateTime.isDateTime(value) ? value.toJSDate() : new Date(value);
+      let jsDate: Date;
+      if (DateTime.isDateTime(value)) {
+        jsDate = value.toJSDate();
+      } else if (value instanceof Date) {
+        jsDate = value;
+      } else {
+        jsDate = new Date(value as string);
+      }
       const date = DateTime.fromJSDate(jsDate);
 
       if (args.length > 0) {
