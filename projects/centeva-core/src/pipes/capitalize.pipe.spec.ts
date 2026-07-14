@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import { CapitalizePipe } from "./capitalize.pipe";
 
 describe('Capitalize Pipe Tests', () => {
@@ -5,5 +6,5 @@ describe('Capitalize Pipe Tests', () => {
         var pipe = new CapitalizePipe();
         expect(pipe.transform('test')).toEqual('Test');
         expect(pipe.transform('test ya')).toEqual('Test Ya');
-    })
+    });
 });

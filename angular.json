@@ -25,12 +25,7 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/centeva-core/src/test.ts",
-            "tsConfig": "projects/centeva-core/tsconfig.spec.json",
-            "karmaConfig": "projects/centeva-core/karma.conf.js"
-          }
+          "builder": "@analogjs/vitest-angular:test"
         }
       }
     }
