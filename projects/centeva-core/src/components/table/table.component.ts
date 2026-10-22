@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { DateTime } from 'luxon';
 import { ColumnDataTypes } from '../../common/constants/ColumnDataTypes';
@@ -18,7 +18,7 @@ import { cloneDeep, remove } from 'lodash-es';
     styleUrls: ['./table.component.scss'],
     standalone: false
 })
-export class TableComponent implements OnInit {
+export class TableComponent {
 
   @Input() currentFilter: SearchCriteriaRequest;
   @Input() set displayedColumns(value: TableColumn[]) {
@@ -74,8 +74,6 @@ export class TableComponent implements OnInit {
 
 
   constructor(public fb: UntypedFormBuilder) { }
-
-  async ngOnInit() { }
 
   private setupForm() {
     this.templateMapping = {};

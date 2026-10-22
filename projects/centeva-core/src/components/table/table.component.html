@@ -1,6 +1,6 @@
 <div class="table-wrapper" id="{{tableWrapperId}}" [ngClass]="{'table-wrapper-loading': tableLoading}" [formGroup]="formGroup">
   <table mat-table tableResizer class="material-table" [dataSource]="dataSource?.Records">
-    @for (column of displayedColumns; track column) {
+    @for (column of displayedColumns; track column.Name) {
       <ng-container matColumnDef="{{column.Name}}">
         <ng-container>
           <th mat-header-cell *matHeaderCellDef [ngStyle]="column.ColumnHeaderStyles">
@@ -9,7 +9,7 @@
                 <ng-container [ngTemplateOutlet]="column.HeaderTemplate" [ngTemplateOutletContext]="{ $implicit: column }"></ng-container>
               } @else {
               <!-- INPUT TYPES -->
-              @if (column.DataType == ColumnDataTypes.INPUT) {
+              @if (column.DataType === ColumnDataTypes.INPUT) {
                 <mat-form-field appearance="outline" subscriptSizing="dynamic" class="column-header">
                   <mat-label>{{column.Name}}</mat-label>
                   <input [formControlName]="column.Property" matInput (input)="filterValueChanged(column)" autocomplete="off"/>
@@ -21,11 +21,11 @@
                 </mat-form-field>
               }
               <!-- SELECT TYPES -->
-              @if (column.DataType == ColumnDataTypes.SELECT) {
+              @if (column.DataType === ColumnDataTypes.SELECT) {
                 <mat-form-field appearance="outline" subscriptSizing="dynamic" class="column-header">
                   <mat-label>{{ column.Name }}</mat-label>
                   <mat-select [formControlName]="column.Property" (selectionChange)="filterValueChanged(column)" >
-                    @for (option of column.Options; track option) {
+                    @for (option of column.Options; track $index) {
                       <mat-option [value]="option[column.OptionValueProperty]">
                         {{ option.Name }}
                       </mat-option>
@@ -39,11 +39,11 @@
                 </mat-form-field>
               }
               <!-- MULTISELECT TYPES -->
-              @if (column.DataType == ColumnDataTypes.MULTISELECT) {
+              @if (column.DataType === ColumnDataTypes.MULTISELECT) {
                 <mat-form-field appearance="outline" subscriptSizing="dynamic" class="column-header">
                   <mat-label>{{ column.Name }}</mat-label>
                   <mat-select [formControlName]="column.Property" (selectionChange)="filterOrValueChanged(column)" matTooltip="Select all that apply" multiple>
-                    @for (option of column.Options; track option) {
+                    @for (option of column.Options; track $index) {
                       <mat-option [value]="option[column.OptionValueProperty]">
                         <ng-container [ngTemplateOutlet]="column.OptionTemplate ?? defaultMultiSelectOption" [ngTemplateOutletContext]="{ option: option }"></ng-container>
                       </mat-option>
@@ -57,7 +57,7 @@
                 </mat-form-field>
               }
               <!-- DATE TYPES -->
-              @if (column.DataType == ColumnDataTypes.DATEPICKER) {
+              @if (column.DataType === ColumnDataTypes.DATEPICKER) {
                 <mat-form-field appearance="outline" subscriptSizing="dynamic" class="column-header">
                   <mat-label>{{column.Name}}</mat-label>
                   <input [formControlName]="column.Property" matInput #pickerInput [matDatepicker]="picker" (click)="picker.open()" (dateChange)="filterValueChanged(column)">
@@ -71,7 +71,7 @@
                 </mat-form-field>
               }
               <!-- DATE RANGE TYPES -->
-              @if (column.DataType == ColumnDataTypes.DATEPICKRANGE) {
+              @if (column.DataType === ColumnDataTypes.DATEPICKRANGE) {
                 <mat-form-field appearance="outline" subscriptSizing="dynamic" class="column-header" (click)="picker2.open()">
                   <mat-label>{{column.Name}}</mat-label>
                   <mat-date-range-input [rangePicker]="picker2" matTooltip="{{column.Tooltip}}">
@@ -88,7 +88,7 @@
                 </mat-form-field>
               }
               <!-- COMPARISON TYPES -->
-              @if (column.DataType == ColumnDataTypes.COMPARISON) {
+              @if (column.DataType === ColumnDataTypes.COMPARISON) {
                 <mat-form-field appearance="outline" subscriptSizing="dynamic" class="column-header" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
                   <mat-label>{{column.Name}}</mat-label>
                   <input [formControlName]="column.Property" #inputType matInput numberInput (input)="filterValueChanged(column)" autocomplete="off"/>
