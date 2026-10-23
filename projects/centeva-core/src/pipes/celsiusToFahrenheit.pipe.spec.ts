@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import { CelsiusToFahrenheitPipe } from "./celsiusToFahrenheit.pipe";
 
 describe('CelsiusToFahrenheit Pipe Tests', () => {
@@ -5,5 +6,5 @@ describe('CelsiusToFahrenheit Pipe Tests', () => {
         var pipe = new CelsiusToFahrenheitPipe();
         expect(pipe.transform(100)).toEqual(212);
         expect(pipe.transform(0)).toEqual(32);
-    })
+    });
 });

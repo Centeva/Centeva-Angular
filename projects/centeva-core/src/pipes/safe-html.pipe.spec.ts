@@ -1,22 +1,23 @@
-import { DomSanitizer } from '@angular/platform-browser'
+import { beforeEach, describe, expect, it } from "vitest";
+import { DomSanitizer } from '@angular/platform-browser';
 import { TestBed } from "@angular/core/testing";
 import { SafeHtmlPipe } from './safe-html.pipe';
 
 describe('Safe Html Pipe tests', () => {
-  let sanitizer: DomSanitizer;
-  let pipe: SafeHtmlPipe;
+    let sanitizer: DomSanitizer;
+    let pipe: SafeHtmlPipe;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [DomSanitizer]
-    })
-    .compileComponents();
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [DomSanitizer]
+        })
+            .compileComponents();
 
-    sanitizer = TestBed.inject(DomSanitizer);
-    pipe = new SafeHtmlPipe(sanitizer);
-  })
+        sanitizer = TestBed.inject(DomSanitizer);
+        pipe = new SafeHtmlPipe(sanitizer);
+    });
 
-  it('creates an instance', () => {
-    expect(pipe).toBeTruthy();
-  });
+    it('creates an instance', () => {
+        expect(pipe).toBeTruthy();
+    });
 });
